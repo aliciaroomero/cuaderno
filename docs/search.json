@@ -1,0 +1,37 @@
+[
+  {
+    "objectID": "about.html",
+    "href": "about.html",
+    "title": "about",
+    "section": "",
+    "text": "¡Hola! Soy Alicia Romero Osuna, estudiante de 4º del grado en Biotecnología de la UV. En esta página web se encuentran todas las prácticas que he realizado a lo largo del curso en la asignatura de Bioinformática.\nContacto:\n\n\n\nCorreo de la institución\nosuna2@alumni.uv.es\n\n\nNombre de usuario en GitHub\naliciaroomero"
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Website",
+    "section": "",
+    "text": "En esta página web se aprecian las prácticas realizadas durante las sesiones de Bioinformática. Todo el contenido acerca de estas se encuentra tanto en esta página web como en mi repositorio “cuaderno” de GitHub.\n\nLos guiones se han subido en versión html (renderizados) para facilitar su visualización.\nTodas las prácticas (excepto un par de ejercicios) están acabadas y revisadas. Cabe destacar que el contenido de mi cuaderno ha sido completado gracias a la ayuda de mis compañeras. Ellas han colaborado con algunos ejercicios que me faltaban o me han ayudado a corregir algunos errores de mis guiones, mientras que yo he realizado lo mismo con sus repositorios. El objetivo de nuestra colaboración ha sido completar los contenidos de nuestros cuadernos.\n\n\n\nLos contenidos que se han trabajado durante las prácticas son los mismos que los explicados en clase, sin embargo, estos han sido llevados a la práctica (valga la redundancia) en clase de informática. De esta forma, las sesiones prácticas desarrolladas durante el curso han servido para consolidar los conocimientos adquiridos en las clases teóricas de la asignatura.\n\n\n\nDurante el desarrollo de estas prácticas he utilizado las siguientes herramientas:\n\nBash\nRStudio\nGitHub\n\n\n\n\nAdemás de los contenidos teóricos, he aprendido a llevarlos a la práctica utilizando las herramientas previamente mencionadas. Me gustaría destacar que a lo largo del curso he adquirido mayor soltura con ellas. Incluso he aprendido a desarrollar una página web utilizando R studio."
+  },
+  {
+    "objectID": "index.html#qué-se-ha-trabajado-durante-las-prácticas",
+    "href": "index.html#qué-se-ha-trabajado-durante-las-prácticas",
+    "title": "Website",
+    "section": "",
+    "text": "Los contenidos que se han trabajado durante las prácticas son los mismos que los explicados en clase, sin embargo, estos han sido llevados a la práctica (valga la redundancia) en clase de informática. De esta forma, las sesiones prácticas desarrolladas durante el curso han servido para consolidar los conocimientos adquiridos en las clases teóricas de la asignatura."
+  },
+  {
+    "objectID": "index.html#en-qué-entorno-se-ha-trabajado-durante-las-prácticas",
+    "href": "index.html#en-qué-entorno-se-ha-trabajado-durante-las-prácticas",
+    "title": "Website",
+    "section": "",
+    "text": "Durante el desarrollo de estas prácticas he utilizado las siguientes herramientas:\n\nBash\nRStudio\nGitHub"
+  },
+  {
+    "objectID": "index.html#qué-he-aprendido",
+    "href": "index.html#qué-he-aprendido",
+    "title": "Website",
+    "section": "",
+    "text": "Además de los contenidos teóricos, he aprendido a llevarlos a la práctica utilizando las herramientas previamente mencionadas. Me gustaría destacar que a lo largo del curso he adquirido mayor soltura con ellas. Incluso he aprendido a desarrollar una página web utilizando R studio."
+  }
+]
