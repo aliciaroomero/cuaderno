@@ -263,7 +263,7 @@ vertebrados[['results']][['metadata']]
 kable(vertebrados)
 ```
 
->Se ha usado `#| eval: false` ,`#| message: false`y `#| warning: false` para facilitar la visualización al renderizarlo.
+> Se ha usado `#| eval: false` ,`#| message: false`y `#| warning: false` para facilitar la visualización al renderizarlo.
 
 ### Ejercicio 6
 
