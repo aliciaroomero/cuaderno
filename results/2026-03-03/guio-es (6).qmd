@@ -253,6 +253,26 @@ kable(flatten(pfam00019[['results']][['metadata']]))
 
 *Intenta obtener una lista de los dominios de Pfam presentes en vertebrados (taxon 7742). Al menos, los 20 primeros.*
 
+```{r}
+#| eval: false
+#| message: false
+#| warning: false
+vertebrados <- fromJSON(paste0(API, 'entry/pfam/taxonomy/uniprot/7742'))
+names(vertebrados)
+vertebrados[['results']][['metadata']]
+kable(vertebrados)
+```
+
+>Se ha usado `#| eval: false` ,`#| message: false`y `#| warning: false` para facilitar la visualización al renderizarlo.
+
 ### Ejercicio 6
 
 *¿Cuántas proteínas de cocodrilos (taxon 8493) conocemos con el dominio zinc finger, C2HC type (Pfam PF01530)?*
+
+```{r}
+pfam01530 <- fromJSON(paste0(API, 'protein/uniprot/entry/pfam/PF01530/taxonomy/uniprot/8493'))
+names(pfam01530)
+pfam01530[['count']]
+```
+
+Se conocen 15 proteínas de cocodrilos con el dominio *zinc finger, C2HC type* (Pfam PF01530).

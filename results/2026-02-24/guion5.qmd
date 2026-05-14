@@ -90,7 +90,7 @@ En este caso, al ejecutar el comando aparece el siguiente error: "URL using bad/
 URL rejected: Malformed input to a URL function.
 
 | Este bloque de código no funciona. Lo pongo enmarcado de esta manera para poder renderizar la práctica, sino no me dejaba. |
-|----|
+|------------------------------------------------------------------------|
 | curl_download('<https://www.ebi.ac.uk/ena/portal/api/search?result=assembly&query=tax_tree(6157)> AND genome_representation="full"&fields=version,tax_id,scientific_name,last_updated,base_count&limit=0', destfile = 'z1.txt') |
 
 Este comando sí que se ha podido ejecutar correctamente. No ha aparecido ningún error. Ha descargado un primer archivo: una \# tabla con varias columnas.
@@ -244,3 +244,17 @@ curl_download(URL, destfile = 'Adh.fasta')
 ### Ejercicio 4
 
 *Intenta descargar esas mismas secuencias en formato EMBL.*
+
+Para ello:
+
+```{r}
+portal    <- 'https://www.ebi.ac.uk/ena/browser/api/'
+formato2   <- 'embl/'
+accession <- 'AAC39011,AAY25307,ABU44510,ABG56046,AAO06902'
+URL2 <- paste0(portal, formato2, accession)
+URL2
+```
+
+```{r}
+curl_download(URL2, destfile = 'Adh.EMBL')
+```
