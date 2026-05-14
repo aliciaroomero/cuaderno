@@ -1,0 +1,29 @@
+---
+title: "Website"
+---
+
+# Contenido de la página principal
+
+En esta página web se aprecian las prácticas realizadas durante las sesiones de **Bioinformática**. Todo el contenido acerca de estas se encuentra tanto en esta página web como en mi repositorio "cuaderno" de [**GitHub**](https://github.com/aliciaroomero/cuaderno.git).
+
+-   Los guiones se han subido en versión html (renderizados) para facilitar su visualización.
+
+-   Todas las prácticas (excepto un par de ejercicios) están acabadas y revisadas. Cabe destacar que el contenido de mi cuaderno ha sido completado [gracias a la ayuda de mis compañeras]{.underline}. Ellas han colaborado con algunos ejercicios que me faltaban o me han ayudado a corregir algunos errores de mis guiones, mientras que yo he realizado lo mismo con sus repositorios. El objetivo de nuestra colaboración ha sido completar los contenidos de nuestros cuadernos.
+
+## ¿Qué se ha trabajado durante las prácticas?
+
+Los contenidos que se han trabajado durante las prácticas son los mismos que los explicados en clase, sin embargo, estos han sido llevados a la práctica (valga la redundancia) en clase de informática. De esta forma, las sesiones prácticas desarrolladas durante el curso han servido para consolidar los conocimientos adquiridos en las clases teóricas de la asignatura.
+
+## ¿En qué entorno se ha trabajado durante las prácticas?
+
+Durante el desarrollo de estas prácticas he utilizado las siguientes **herramientas**:
+
+-   **Bash**
+
+-   **RStudio**
+
+-   **GitHub**
+
+## ¿Qué he aprendido?
+
+Además de los contenidos teóricos, he aprendido a llevarlos a la práctica utilizando las herramientas previamente mencionadas. Me gustaría destacar que a lo largo del curso he adquirido mayor soltura con ellas. Incluso he aprendido a desarrollar una página web utilizando R studio.

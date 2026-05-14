@@ -1,0 +1,13 @@
+---
+title: "about"
+author: "Alicia Romero Osuna"
+---
+
+¡Hola! Soy Alicia Romero Osuna, estudiante de 4º del grado en Biotecnología de la UV. En esta página web se encuentran todas las prácticas que he realizado a lo largo del curso en la asignatura de Bioinformática.
+
+**Contacto:**
+
+|                                 |                      |
+|---------------------------------|----------------------|
+| **Correo de la institución**    | osuna2\@alumni.uv.es |
+| **Nombre de usuario en GitHub** | aliciaroomero        |

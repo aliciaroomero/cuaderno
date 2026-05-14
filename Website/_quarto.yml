@@ -1,0 +1,56 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+    - about.qmd
+
+resources:
+  - "html/*.html"
+
+website:
+  title: "Cuaderno de Bioinformática"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Inicio
+      - href: about.qmd
+        text: "Acerca de mí..."
+  sidebar:
+    style: "docked"
+    search: true
+    contents:
+      - section: "Prácticas"
+        contents:
+          - href: "html/Práctica 1.html"
+            text: "Práctica 1: Nociones de Bash y alineamientos básicos"
+          - href: "html/Practica2 guion.html"
+            text: "Práctica 2: Control de versiones con Git"
+          - href: "html/Practica 3.html"
+            text: "Práctica 3: Mapeo de secuencias cortas"
+          - href: "html/guio-es4.html"
+            text: "Práctica 4: Tablas en R o marcos de datos con R"
+          - href: "html/guion5.html"
+            text: "Práctica 5: Búsquedas programáticas en la base de datos ENA"
+          - href: "html/guio-es (6).html"
+            text: "Práctica 6: Búsquedas programáticas en Interpro"
+          - href: "html/guion 7.html"
+            text: "Práctica 7: Visualización y exploración de datos"
+          - href: "html/practica 8.html"
+            text: "Práctica 8: BLAST"
+          - href: "html/Práctica 9.html"
+            text: "Práctica 9: Reconstrucción filogenética"
+          - href: "html/Práctica 10.html"
+            text: "Práctica 10: Ensamblaje de genomas"
+          - href: "html/Práctica 11.html"
+            text: "Práctica 11: Anotación"
+          - href: "html/Práctica 12.html"
+            text: "Práctica 12: Análisis de la expresión diferencial"
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+
+editor: visual
