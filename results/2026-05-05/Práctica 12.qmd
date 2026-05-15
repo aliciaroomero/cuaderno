@@ -1,19 +1,40 @@
 ---
-title: "Práctica 12"
-author: "Alicia Romero Osuna"
-html:
-    embed-resources: true
-editor: visual
+title: "Análisis de expresión diferencial"
+lang: es
+date: today
+execute: 
+  output: true
+  error: true
 engine: knitr
+bibliography: ../../doc/references.bib
+language:
+   title-block-published: "Última actualización:"
+   section-title-references: "Bibliografía"
+format:
+   html:
+      embed-resources: true
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 # PRÁCTICA 12
 
-*¡OJO!* Es importante actualizar y descargar el paquete DESeq2, ya que lo utilizaremos en esta práctica.
+*¡OJO!* Es importante actualizar y descargar el paquete DESeq2, ya que
+lo utilizaremos en esta práctica.
 
 ## Datos
 
-Utilizaremos las medidas de expresión génica del archivo salmon.merged.gene_counts.ts (descargado desde el aula virtual). Los datos proceden de 12 genotecas de RNA-seq de lecturas emparejadas, de muestras de Drosophila melanogaster de dos orígenes geográficos (Panamá y Maine) y dos tratamientos de temperatura (low y high) (Zhao 2015). Hay 3 réplicas biológicas para cada combinación de región y temperatura. Además, necesitáis el archivo dme_elev_samples.tsv, una tabla que indica a qué región y tratamiento pertenece cada muestra (descargado desde el aula virtual). Los dos archivos deben estar guardados en la carpeta de datos.
+Utilizaremos las medidas de expresión génica del archivo
+salmon.merged.gene_counts.ts (descargado desde el aula virtual). Los
+datos proceden de 12 genotecas de RNA-seq de lecturas emparejadas, de
+muestras de Drosophila melanogaster de dos orígenes geográficos (Panamá
+y Maine) y dos tratamientos de temperatura (low y high) (Zhao 2015). Hay
+3 réplicas biológicas para cada combinación de región y temperatura.
+Además, necesitáis el archivo dme_elev_samples.tsv, una tabla que indica
+a qué región y tratamiento pertenece cada muestra (descargado desde el
+aula virtual). Los dos archivos deben estar guardados en la carpeta de
+datos.
 
 ## Exploración de los datos
 
@@ -26,9 +47,11 @@ muestras
 
 ### Ejercicio 1
 
-*Recuerda dejar constancia en un bloque de código de cómo obtienes las respuestas.*
+*Recuerda dejar constancia en un bloque de código de cómo obtienes las
+respuestas.*
 
-*A) Usa la función paste() para añadir una columna a muestras que contenga la población y la temperatura unidas por \_.*
+*A) Usa la función paste() para añadir una columna a muestras que
+contenga la población y la temperatura unidas por \_.*
 
 ```{r}
 muestras$nueva_columna <- paste(muestras$population, muestras$temp, sep = "_")
@@ -37,7 +60,16 @@ muestras$nueva_columna
 
 *B) ¿Cuál es el número total de lecturas por muestra?*
 
-El dataframe genex tiene el dataframe del gen y una columna por cada muestra, los números que vemos son "counts". Es un recuento del número de lecturas que mapean en cada uno de los genes/muestras proveniendo del RNASeq. Si pone un punto en el número es porque el programa no está "seguro" acerca del recuento y pone un decimal. No lo tenemos que aplicar a toda la sumas de columnas, ya que las dos primeras no son números, entonces no deben ser sumadas. Vemos que hay entre 20-30 millones de lecturas por muestra. Si hay 20.000 genes y entre 20-30 millones de lecturas por muestra nos hacemos la idea de lecturas por gen.
+El dataframe genex tiene el dataframe del gen y una columna por cada
+muestra, los números que vemos son "counts". Es un recuento del número
+de lecturas que mapean en cada uno de los genes/muestras proveniendo del
+RNASeq. Si pone un punto en el número es porque el programa no está
+"seguro" acerca del recuento y pone un decimal. No lo tenemos que
+aplicar a toda la sumas de columnas, ya que las dos primeras no son
+números, entonces no deben ser sumadas. Vemos que hay entre 20-30
+millones de lecturas por muestra. Si hay 20.000 genes y entre 20-30
+millones de lecturas por muestra nos hacemos la idea de lecturas por
+gen.
 
 ```{r}
 total_lecturas <- colSums(genex[ , -c (1,2)])
@@ -46,9 +78,15 @@ total_lecturas
 
 *C) ¿Los recuentos tienen distribuciones parecidas entre muestras?*
 
-Para separar las muestras metemos las columnas una bajo de otra, para ello usamos pivot_longer. Enviamos los nombres a la variable muestra y los valores a la de expresion. Aparecen algunos errores porque son valores (de expresión) con cero, es decir, no se expresan los genes (y nosotros estamos usando logaritmos). A continuación vemos un violin plot.
+Para separar las muestras metemos las columnas una bajo de otra, para
+ello usamos pivot_longer. Enviamos los nombres a la variable muestra y
+los valores a la de expresion. Aparecen algunos errores porque son
+valores (de expresión) con cero, es decir, no se expresan los genes (y
+nosotros estamos usando logaritmos). A continuación vemos un violin
+plot.
 
-**Nota:** he añadido en el siguiente código *warning:false* y *message:false*, ya que salía un error a la hora de representar.
+**Nota:** he añadido en el siguiente código *warning:false* y
+*message:false*, ya que salía un error a la hora de representar.
 
 ```{r}
 #| warning: false
@@ -60,17 +98,24 @@ genex_long <- pivot_longer(genex, 3:14, names_to = 'muestra', values_to = 'expre
 ggplot(data = genex_long, mapping = aes(x = muestra, y = expression)) + geom_violin() + scale_y_continuous(trans = 'log')
 ```
 
-Otra opción sería la función pairs acepta una matriz/dataframe de datos numéricos.
+Otra opción sería la función pairs acepta una matriz/dataframe de datos
+numéricos.
 
 ```{r}
 pairs(genex[, -c(1,2)])
 ```
 
-La función pairs muestra la nube de puntos de cada pareja. La mayor parte de muestras tienen una expresión baja, se concentran todos en la esquina inferior izquierda. Tenemos muchos paneles, podríamos haberlo hecho condición por condición.
+La función pairs muestra la nube de puntos de cada pareja. La mayor
+parte de muestras tienen una expresión baja, se concentran todos en la
+esquina inferior izquierda. Tenemos muchos paneles, podríamos haberlo
+hecho condición por condición.
 
-*D) ¿Cuántos genes no se expresan en absoluto en ninguna de las muestras?*
+*D) ¿Cuántos genes no se expresan en absoluto en ninguna de las
+muestras?*
 
-Igualamos a cero para crear un vector de verdadero y falso, así nos dicen en cuántos genes la expresión es cero. En este caso, hay 4722 genes sin expresión.
+Igualamos a cero para crear un vector de verdadero y falso, así nos
+dicen en cuántos genes la expresión es cero. En este caso, hay 4722
+genes sin expresión.
 
 ```{r}
 genes_sin_expresion <- sum(rowSums(genex[, -c(1,2)]) ==0)
@@ -79,7 +124,10 @@ genes_sin_expresion
 
 ## Crear el objeto de clase DESeqDataSet
 
-Para crear un objeto de clase DESeqDataSet necesitamos que las filas de la tabla muestras estén en el mismo orden que las columnas en genex. La función DESeqDataSetFromMatrix() necesita que los recuentos sean una matriz, no un marco de datos. Y en muestras debe haber factores.
+Para crear un objeto de clase DESeqDataSet necesitamos que las filas de
+la tabla muestras estén en el mismo orden que las columnas en genex. La
+función DESeqDataSetFromMatrix() necesita que los recuentos sean una
+matriz, no un marco de datos. Y en muestras debe haber factores.
 
 ```{r}
 suppressMessages(library('DESeq2'))
@@ -99,7 +147,12 @@ muestras$temp       <- factor(muestras$temp,
 muestras
 ```
 
-Aunque no hacía falta definir los niveles de los factores, este es un buen momento para definir manualmente su orden (por defecto se ordenan alfabéticamente). El orden de los niveles determina qué nivel actúa como referencia en los contrastes estadísticos (el primero). Esto resultaría importante, por ejemplo, al comparar tratamientos respecto de un control.
+Aunque no hacía falta definir los niveles de los factores, este es un
+buen momento para definir manualmente su orden (por defecto se ordenan
+alfabéticamente). El orden de los niveles determina qué nivel actúa como
+referencia en los contrastes estadísticos (el primero). Esto resultaría
+importante, por ejemplo, al comparar tratamientos respecto de un
+control.
 
 Los datos de recuento deben ser números enteros y en forma de matriz.
 
@@ -119,11 +172,15 @@ dds1 <- DESeqDataSetFromMatrix(
 dds1
 ```
 
-**Nota:** los objetos DESeqDataSet pueden contener información sobre las coordenadas cromosómicas de los genes o tránscritos, si se construyen a partir de otro tipo de datos.
+**Nota:** los objetos DESeqDataSet pueden contener información sobre las
+coordenadas cromosómicas de los genes o tránscritos, si se construyen a
+partir de otro tipo de datos.
 
 ## Pre-filtrado
 
-Una fracción importante de genes no se están expresando en ningúna muestra. Aunque el filtrado no es necesario, ayuda a reducir la memoria ocupada por dds1:
+Una fracción importante de genes no se están expresando en ningúna
+muestra. Aunque el filtrado no es necesario, ayuda a reducir la memoria
+ocupada por dds1:
 
 ```{r}
 keep <- rowSums(counts(dds1)) > 0
@@ -132,26 +189,40 @@ dds1 <- dds1[keep, ]
 
 ## Expresión diferencial
 
-Observa que la función DESeq() produce un objeto también de clase DESeqDataSet, pero con resultados añadidos:
+Observa que la función DESeq() produce un objeto también de clase
+DESeqDataSet, pero con resultados añadidos:
 
 ```{r}
 dds1 <- DESeq(dds1)
 ```
 
-Vemos que nos produce los resultados entre el contraste del último nivel y del factor en la tabla.
+Vemos que nos produce los resultados entre el contraste del último nivel
+y del factor en la tabla.
 
 ```{r}
 res <- results(dds1)
 res
 ```
 
-Por defecto, la función results() produce la tabla de resultados para el contraste entre el nivel último y el de referencia del último factor en la tabla que describe las muestras. En este caso, el factor es temp, el nivel de referencia es low y el otro nivel es high. Por tanto, los valores de log2FoldChange representan el logaritmo en base 2 de la relación entre niveles de expresión en muestras high respecto de muestras low.
+Por defecto, la función results() produce la tabla de resultados para el
+contraste entre el nivel último y el de referencia del último factor en
+la tabla que describe las muestras. En este caso, el factor es temp, el
+nivel de referencia es low y el otro nivel es high. Por tanto, los
+valores de log2FoldChange representan el logaritmo en base 2 de la
+relación entre niveles de expresión en muestras high respecto de
+muestras low.
 
-En referencia a estos resultados: log2foldchange - logaritmo en base 2 de la relación de cambio. Valores positivos son genes que a temperatura alta se expresan más que en baja. El nivel de expresión es mayor a temperatura baja para los valores negativos. Tenemos un dataframe con 19.508 filas (esto es porque hemos prefiltrado y hemos eliminado los que tienen una expresión muy baja).
+En referencia a estos resultados: log2foldchange - logaritmo en base 2
+de la relación de cambio. Valores positivos son genes que a temperatura
+alta se expresan más que en baja. El nivel de expresión es mayor a
+temperatura baja para los valores negativos. Tenemos un dataframe con
+19.508 filas (esto es porque hemos prefiltrado y hemos eliminado los que
+tienen una expresión muy baja).
 
 ### Ejercicio 3
 
-*A) Mira la ayuda de results() y genera también la tabla de resultados para el contraste entre las dos regiones de procedencia de las moscas.*
+*A) Mira la ayuda de results() y genera también la tabla de resultados
+para el contraste entre las dos regiones de procedencia de las moscas.*
 
 Repetimos lo que hemos realizado anteriormente:
 
@@ -178,27 +249,40 @@ res2 <- results(dds1_2)
 res2
 ```
 
-También lo podemos hacer así (no lo pongo en código de bloque de R para evitar sobreescribir los datos de antes): res2 \<- results(dds1, contrast = c('population', 'panama', 'maine'))
+También lo podemos hacer así (no lo pongo en código de bloque de R para
+evitar sobreescribir los datos de antes): res2 \<- results(dds1,
+contrast = c('population', 'panama', 'maine'))
 
 Otro: p-valor ajustado para resolver el problema de los tests múltiples.
 
-*B) Usa summary() sobre los resultados para ver el número de genes diferencialmente expresados entre cada par de condiciones.*
+*B) Usa summary() sobre los resultados para ver el número de genes
+diferencialmente expresados entre cada par de condiciones.*
 
 ```{r}
 summary(res)
 ```
 
-Tenemos un 12% de genes up-regulated o sobreexpresados ene temperaturas altas sobre bajas, también un 12% de subexpresados. Outliers tenemos 90 y low counts 3018.
+Tenemos un 12% de genes up-regulated o sobreexpresados ene temperaturas
+altas sobre bajas, también un 12% de subexpresados. Outliers tenemos 90
+y low counts 3018.
 
 ```{r}
 summary(res2)
 ```
 
-Tenemos porcentaje bastante equilibrado entre main y panama. La temperatura causa la sobreexpresión. Nota: En clase hemos probado este bloque de código pero me da distinto. Debería dar LFC \> 0 de 623 y LFC \< 0 de 634. Los outliers deberían ser de 90 y low count de 3018.
+Tenemos porcentaje bastante equilibrado entre main y panama. La
+temperatura causa la sobreexpresión. Nota: En clase hemos probado este
+bloque de código pero me da distinto. Debería dar LFC \> 0 de 623 y LFC
+\< 0 de 634. Los outliers deberían ser de 90 y low count de 3018.
 
 *C) ¿Cuál es la tasa de falsos positivos (FDR)?*
 
-En summary podemos apreciar que el FDR es menor de 0,1 en ambos casos. Esto podemos conocerlo de la siguiente forma: en la función results tenemos un parametro alfa que es por defecto 0,1. Por su definición alfa es el umbral de significancia utilziado para filtrar el filtrado independiente. Si somos más exigentes y no lo toleramos y lo queremos hacer con 0,5 lo cambiamos. Este no ha sido el caso de esta práctica.
+En summary podemos apreciar que el FDR es menor de 0,1 en ambos casos.
+Esto podemos conocerlo de la siguiente forma: en la función results
+tenemos un parametro alfa que es por defecto 0,1. Por su definición alfa
+es el umbral de significancia utilziado para filtrar el filtrado
+independiente. Si somos más exigentes y no lo toleramos y lo queremos
+hacer con 0,5 lo cambiamos. Este no ha sido el caso de esta práctica.
 
 ## Gráficas
 
@@ -206,9 +290,20 @@ En summary podemos apreciar que el FDR es menor de 0,1 en ambos casos. Esto pode
 plotMA(res)
 ```
 
-Este plot es simétrico y centrado en cero. Vemos el logFC según el nivel de expresión. Vemos que hay una dispersión grande.
+Este plot es simétrico y centrado en cero. Vemos el logFC según el nivel
+de expresión. Vemos que hay una dispersión grande.
 
-Los genes con niveles de expresión más bajos producen resultados más ruidosos (la varianza es mayor). La función lfcShrink() contrae (shrink) las estimaciones de los efectos (log fold change) para reducir el ruido y hacer el resultado más realista: Aplicamos empirical bayes que es una forma de descomprimir. Lo comprime asumiendo que el logFC lo calcula con error. Vemos que ha disminuido la escala del logFC. Es una forma de ser más conservadores, estimamos la variación pero con muy pocas réplicas. Si asumimos que la tasas de cambio está entre 0,5 y -0,5, vemos que hay dispersión pero la media está muy concentrada. Suponemos que los valores elevados o bajos con pocas muestra se parecen más a la muestra, lo que hace es comprimirlo.
+Los genes con niveles de expresión más bajos producen resultados más
+ruidosos (la varianza es mayor). La función lfcShrink() contrae (shrink)
+las estimaciones de los efectos (log fold change) para reducir el ruido
+y hacer el resultado más realista: Aplicamos empirical bayes que es una
+forma de descomprimir. Lo comprime asumiendo que el logFC lo calcula con
+error. Vemos que ha disminuido la escala del logFC. Es una forma de ser
+más conservadores, estimamos la variación pero con muy pocas réplicas.
+Si asumimos que la tasas de cambio está entre 0,5 y -0,5, vemos que hay
+dispersión pero la media está muy concentrada. Suponemos que los valores
+elevados o bajos con pocas muestra se parecen más a la muestra, lo que
+hace es comprimirlo.
 
 ```{r}
 resShrink <- lfcShrink(dds1, coef = 'temp_high_vs_low',
@@ -236,7 +331,11 @@ print(volcano)
 
 ## Extraer datos transformados
 
-Aunque los datos de entrada no deben estar normalizados y la función DESeq() ya tiene en cuenta las diferencias de tamaño de genoteca entre muestras y la relación entre media y varianza, puede ser útil disponer de los datos normalizados para representarlos gráficamente. Para ello podemos usar las funciones vst() y assay():
+Aunque los datos de entrada no deben estar normalizados y la función
+DESeq() ya tiene en cuenta las diferencias de tamaño de genoteca entre
+muestras y la relación entre media y varianza, puede ser útil disponer
+de los datos normalizados para representarlos gráficamente. Para ello
+podemos usar las funciones vst() y assay():
 
 ```{r}
 dds2 <- vst(dds1)
@@ -255,19 +354,34 @@ heatmap(NormCounts[c(head(row.names(res), 100),
 
 *¿Podrías explicar qué hace el bloque de código anterior?*
 
--   vst tiene la función de estimar la tendencia de la dispersió (Quickly estimate dispersion trend and apply a variance stabilizing transformation).
+-   vst tiene la función de estimar la tendencia de la dispersió
+    (Quickly estimate dispersion trend and apply a variance stabilizing
+    transformation).
 
--   assay contiene una matriz donde las filas representan objetos de interés y las columnas representan las muestras.
+-   assay contiene una matriz donde las filas representan objetos de
+    interés y las columnas representan las muestras.
 
 **Nota:** He consultado help(vst) y help(assay) respectivamente.
 
 ### Ejercicio 6
 
-*A) En [este enlace](https://aulavirtual.uv.es/pluginfile.php/6039768/mod_resource/content/1/guio-es.html) analizan exactamente los mismos datos con otro paquete de R: `limma`. Una de sus conclusiones es se sobreexpresan más genes en temperatura baja que en temperatura alta. ¿Confirma tu análisis esta conclusión?*
+*A) En [este
+enlace](https://aulavirtual.uv.es/pluginfile.php/6039768/mod_resource/content/1/guio-es.html)
+analizan exactamente los mismos datos con otro paquete de R: `limma`.
+Una de sus conclusiones es se sobreexpresan más genes en temperatura
+baja que en temperatura alta. ¿Confirma tu análisis esta conclusión?*
 
-Recapitulando con la primera parte de la práctica, yo he visualizado estos valores mediante summary(res). De esta forma, llegué a la conclusión de se están expresando más genes a temperatura alta: 2418 se sobreexpresan en temperatura alta 2336 se sobreexpresan en temperatura baja No obstante, el enlace no me redirige, así que no puedo comparar los resultados. Mi análisis se confirmaría en el caso de que en el otro análisis también se llegue a la conclusión de que hay más genes sobreexpresados en temperatura alta.
+Recapitulando con la primera parte de la práctica, yo he visualizado
+estos valores mediante summary(res). De esta forma, llegué a la
+conclusión de se están expresando más genes a temperatura alta: 2418 se
+sobreexpresan en temperatura alta 2336 se sobreexpresan en temperatura
+baja No obstante, el enlace no me redirige, así que no puedo comparar
+los resultados. Mi análisis se confirmaría en el caso de que en el otro
+análisis también se llegue a la conclusión de que hay más genes
+sobreexpresados en temperatura alta.
 
-*B) Estos son los 10 genes más diferencialmente expresados según aquel análisis entre las condiciones de baja y alta temperatura:*
+*B) Estos son los 10 genes más diferencialmente expresados según aquel
+análisis entre las condiciones de baja y alta temperatura:*
 
 |   | logFC | AveExpr | t | P.Value | adj.P.Val | B |
 |-----------|-----------|-----------|-----------|-----------|-----------|-----------|
@@ -278,14 +392,22 @@ Recapitulando con la primera parte de la práctica, yo he visualizado estos valo
 | **CG3739** | -2.869172 | 6.514652 | -20.49734 | 4.414988e-12 | 1.175005e-08 | 18.01975 |
 | **Acp1** | 2.231834 | 7.638125 | 17.79441 | 2.089853e-11 | 3.997808e-08 | 16.54909 |
 
-: He elaborado la tabla a partir de los resultados que se ven en el guion del Aula Virtual
+: He elaborado la tabla a partir de los resultados que se ven en el
+guion del Aula Virtual
 
 *¿Cómo se comparan estos resultados con los tuyos?*
 
-Mediante el siguiente código voy a comprobar mis valores para estos genes:
+Mediante el siguiente código voy a comprobar mis valores para estos
+genes:
 
 ```{r}
 res[c("Cpr92F", "Vajk3", "Acp1","CG3739", "CG7214"), ]
 ```
 
-A través de esto, y retomando el apartado A, veo que los resultados están "invertidos". Esto lo observo mediante el FC, ya que cuando me da positivo a mi, en el análisis por limma da negativo. Esto quiere decir que yo para calcular el FC lo he hecho temp alta/temp bajo, mientras que en el analisis por limma se ha hecho temp baja/temp alta. Para poder comprobar los resultados probaríamos a calcular el FC de la misma forma que en el otro estudio.
+A través de esto, y retomando el apartado A, veo que los resultados
+están "invertidos". Esto lo observo mediante el FC, ya que cuando me da
+positivo a mi, en el análisis por limma da negativo. Esto quiere decir
+que yo para calcular el FC lo he hecho temp alta/temp bajo, mientras que
+en el analisis por limma se ha hecho temp baja/temp alta. Para poder
+comprobar los resultados probaríamos a calcular el FC de la misma forma
+que en el otro estudio.

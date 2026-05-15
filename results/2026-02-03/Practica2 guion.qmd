@@ -1,17 +1,31 @@
 ---
-title: "Práctica 2"
-author: "Alicia Romero Osuna"
-html:
-    embed-resources: true
-editor: visual
+title: "Control de versiones con Git"
+lang: es
+date: today
+execute: 
+  output: true
+  error: true
 engine: knitr
+bibliography: ../../doc/references.bib
+language:
+   title-block-published: "Última actualización:"
+   section-title-references: "Bibliografía"
+format:
+   html:
+      embed-resources: true
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 # PRÁCTICA 2
 
-**Nota1:** Esta práctica se realizó durante la sesión 2, no obstante se ha elaborado el guion posteriormente. Este guion es una adaptación del guion que se encuentra en el Aula Virtual.
+**Nota1:** Esta práctica se realizó durante la sesión 2, no obstante se
+ha elaborado el guion posteriormente. Este guion es una adaptación del
+guion que se encuentra en el Aula Virtual.
 
-**Nota2:** En el día en el que se realizó esta sesión se subió un archivo de texto con todos los comandos realizados durante la práctica.
+**Nota2:** En el día en el que se realizó esta sesión se subió un
+archivo de texto con todos los comandos realizados durante la práctica.
 
 ## Objetivos
 
@@ -27,15 +41,20 @@ engine: knitr
 
 En el terminal de Bash debemos escribirr lo siguiente:
 
-git config --global user.name "Nombre y apellidos" git config --global user.email "...\@alumni.uv.es"
+git config --global user.name "Nombre y apellidos" git config --global
+user.email "...\@alumni.uv.es"
 
-Es importante utilizar el mismo correo electrónico al crear una cuenta en GitHub.
+Es importante utilizar el mismo correo electrónico al crear una cuenta
+en GitHub.
 
-Se configura nano como editor de texto usado para escribir los mensajes con los que etiquetamos las instantáneas o los commits.
+Se configura nano como editor de texto usado para escribir los mensajes
+con los que etiquetamos las instantáneas o los commits.
 
 git config --global core.editor "nano -w"
 
-Git usa el término “rama” (branch) para referirse a una cadena lineal de commits. A la rama principal, con la que se inicia un repositorio la llama master, aunque nosotros le llamaremos "soca" (cepa en valenciano).
+Git usa el término “rama” (branch) para referirse a una cadena lineal de
+commits. A la rama principal, con la que se inicia un repositorio la
+llama master, aunque nosotros le llamaremos "soca" (cepa en valenciano).
 
 git config --global init.defaultBranch soca
 
@@ -43,21 +62,38 @@ Puedes ver la configuración actual con git config --list.
 
 ## Creación del repositorio
 
-Desde la carpeta principal, en el terminal ejecutamos *git init*. Tras esto, se habrá creado una carpeta oculta, .git. A partir de ese momento, Git observará las modificaciones de todos los archivos en esa carpeta y en todas sus subcarpetas.
+Desde la carpeta principal, en el terminal ejecutamos *git init*. Tras
+esto, se habrá creado una carpeta oculta, .git. A partir de ese momento,
+Git observará las modificaciones de todos los archivos en esa carpeta y
+en todas sus subcarpetas.
 
-[¡OJO! Es importante no crear repositorios en subcarpetas de un repositorio previo.]{.underline}
+[¡OJO! Es importante no crear repositorios en subcarpetas de un
+repositorio previo.]{.underline}
 
-Una vez creado el repositorio, se usa el comando git status, para comprobar el estado de tus archivos.
+Una vez creado el repositorio, se usa el comando git status, para
+comprobar el estado de tus archivos.
 
 ## Seguimiento de modificaciones
 
-Utiliza *git add ...* para añadir archivos al área de preparación o “escenario”. Consulta git status y cuando los hayas añadido todos, ejecuta \`git commit -m “…”, donde debes sustituir los “…” por un mensaje entrecomillado que describa los cambios introducidos en la carpeta.
+Utiliza *git add ...* para añadir archivos al área de preparación o
+“escenario”. Consulta git status y cuando los hayas añadido todos,
+ejecuta \`git commit -m “…”, donde debes sustituir los “…” por un
+mensaje entrecomillado que describa los cambios introducidos en la
+carpeta.
 
 ## Ignorar cosas
 
-Git está diseñado para compartir archivos pequeños que van cambiando a lo largo de un proyecto. No es un sistema de copias de seguridad. La carpeta de datos debería ser excluida del seguimiento ofrecido por Git. El motivo es que allí pueden residir archivos muy grandes que además no deberían modificarse nunca. Además, en cualquier carpeta de resultados puede haber archivos de los que no queremos que Git observe: si son de más de 10 Mb, o si son archivos temporales sin importancia, por ejemplo.
+Git está diseñado para compartir archivos pequeños que van cambiando a
+lo largo de un proyecto. No es un sistema de copias de seguridad. La
+carpeta de datos debería ser excluida del seguimiento ofrecido por Git.
+El motivo es que allí pueden residir archivos muy grandes que además no
+deberían modificarse nunca. Además, en cualquier carpeta de resultados
+puede haber archivos de los que no queremos que Git observe: si son de
+más de 10 Mb, o si son archivos temporales sin importancia, por ejemplo.
 
-Para ignorar ciertos archivos, podemos crear el archivo .gitignore, directamente en la carpeta de trabajo. Es un archivo de texto, y su contenido es una lista de archivos a ignorar.
+Para ignorar ciertos archivos, podemos crear el archivo .gitignore,
+directamente en la carpeta de trabajo. Es un archivo de texto, y su
+contenido es una lista de archivos a ignorar.
 
 Por ejemplo:
 
@@ -73,52 +109,105 @@ Estas tres líneas indican:
 
 2.  Ignora el contenido de la carpeta local `data`.
 
-3.  Ignora todos los archivos que terminen en `.bam`. Observa el uso del asterisco, “\*“, como comodín: representa cualquier cadena de caracteres.
+3.  Ignora todos los archivos que terminen en `.bam`. Observa el uso del
+    asterisco, “\*“, como comodín: representa cualquier cadena de
+    caracteres.
 
 ## Crear un repositorio en Github
 
-Para ello primero nos hemos tenido que haber creado una cuenta de usuario. Para la creación de un nuevo repositorio es recomendable darle el mismo nombre que tiene la carpeta en la que has creado tu repositorio local.
+Para ello primero nos hemos tenido que haber creado una cuenta de
+usuario. Para la creación de un nuevo repositorio es recomendable darle
+el mismo nombre que tiene la carpeta en la que has creado tu repositorio
+local.
 
-Github te da la opción de añadir un archivo README.md, un archivo .gitignore y una licencia.
+Github te da la opción de añadir un archivo README.md, un archivo
+.gitignore y una licencia.
 
-Hemos creado una licencia en un archivo LICENSE.txt, que posteriormente se ha añadido al repositorio de GitHub.
+Hemos creado una licencia en un archivo LICENSE.txt, que posteriormente
+se ha añadido al repositorio de GitHub.
 
 ## Crear un par de llaves SSH
 
-Para identificarnos cada vez que actualizamos el repositorio remoto, son necesarias un par de llaves SSH. Las llaves son documentos de texto.
+Para identificarnos cada vez que actualizamos el repositorio remoto, son
+necesarias un par de llaves SSH. Las llaves son documentos de texto.
 
-Una llave es pública y actúa más bien como un cerrojo. La otra llave es privada: queda guardada en una carpeta oculta .ssh/, en el dirctorio de usuario de tu ordenador, sin permiso de lectura más que para la persona propietaria. La llave privada debe estar protegida por contraseña o passphrase (una frase es más fácil de recordar que una contraseña y más difícil de adivinar, aunque más larga de teclear). Para crear un par de llaves, ejecuta el código siguiente en el terminal (desde cualquier carpeta), usando tu dirección de correo electrónico de la Universidad:
+Una llave es pública y actúa más bien como un cerrojo. La otra llave es
+privada: queda guardada en una carpeta oculta .ssh/, en el dirctorio de
+usuario de tu ordenador, sin permiso de lectura más que para la persona
+propietaria. La llave privada debe estar protegida por contraseña o
+passphrase (una frase es más fácil de recordar que una contraseña y más
+difícil de adivinar, aunque más larga de teclear). Para crear un par de
+llaves, ejecuta el código siguiente en el terminal (desde cualquier
+carpeta), usando tu dirección de correo electrónico de la Universidad:
 
 ssh-keygen -t ed25519 -C "usuaria\@alumni.uv.es"
 
-Acepta la ubicación propuesta por defecto donde guardar las llaves pulsando Enter cuando te pregunte. A continuación, introduce la contraseña o passphrase que quieras y no la olvides.
+Acepta la ubicación propuesta por defecto donde guardar las llaves
+pulsando Enter cuando te pregunte. A continuación, introduce la
+contraseña o passphrase que quieras y no la olvides.
 
-Posteriormente, en el directorio de usuario habrá aparecido una carpeta .ssh/ con dos archivos: ed25519 y ed25519.pub. Éste último es la llave pública. Puedes visualizarla en el terminal, por ejemplo con la orden cat \~/.ssh/ed25519.pub. Copia en el portapapele la llave (desde “ssh-…” hasta “…(alumni.uv.es?)”). A continuación, accede a tu perfil de Github. Pincha sobre el icono en la esquina superior derecha y entra en el apartado “Settings” del menú. Busca la sección “SSH and GPG keys”, y pulsa en “New SSH key”. Nombra la llave de manera que te recuerde el ordenador donde se encuentra la llave privada (por ejemplo, “portatil”) y pega la llave pública en el recuadro destinado a ello. Por último, confirma la acción pulsando el botón verde.
+Posteriormente, en el directorio de usuario habrá aparecido una carpeta
+.ssh/ con dos archivos: ed25519 y ed25519.pub. Éste último es la llave
+pública. Puedes visualizarla en el terminal, por ejemplo con la orden
+cat \~/.ssh/ed25519.pub. Copia en el portapapele la llave (desde “ssh-…”
+hasta “…(alumni.uv.es?)”). A continuación, accede a tu perfil de Github.
+Pincha sobre el icono en la esquina superior derecha y entra en el
+apartado “Settings” del menú. Busca la sección “SSH and GPG keys”, y
+pulsa en “New SSH key”. Nombra la llave de manera que te recuerde el
+ordenador donde se encuentra la llave privada (por ejemplo, “portatil”)
+y pega la llave pública en el recuadro destinado a ello. Por último,
+confirma la acción pulsando el botón verde.
 
 ## Vincular el repositorio local al remoto
 
-En la página de Github donde reside tu repositorio, encontrarás un botón verde con la inscripción \<\> Code. Al pincharlo, la pestaña izquierda (“Local”) te sugiere que puedes “clonar” el repositorio y te ofrece tres opciones, una de las cuales es “SSH”. No vamos a clonarlo, porque la versión local ya tiene más información que la remota. Pero igualmente copia la dirección SSH que está allí indicada (git\@github.com:usuario/repositorio) y vuelve al terminal.
+En la página de Github donde reside tu repositorio, encontrarás un botón
+verde con la inscripción \<\> Code. Al pincharlo, la pestaña izquierda
+(“Local”) te sugiere que puedes “clonar” el repositorio y te ofrece tres
+opciones, una de las cuales es “SSH”. No vamos a clonarlo, porque la
+versión local ya tiene más información que la remota. Pero igualmente
+copia la dirección SSH que está allí indicada
+(git\@github.com:usuario/repositorio) y vuelve al terminal.
 
-Desde el terminal, estando en la carpeta de trabajo, puedes vincular tu repositorio local al remoto mediante una orden como esta:
+Desde el terminal, estando en la carpeta de trabajo, puedes vincular tu
+repositorio local al remoto mediante una orden como esta:
 
 git remote add origin git\@github.com:usuario/repositorio
 
-pero usando la dirección SSH de tu repositorio, que has copiado antes. La palabra “origin” identificará el remoto en tu repositorio local. Podrías haberle dado cualquier otro nombre. Pero “origin” es un estándar muy aceptado. A continuación, puedes enviar tu trabajo al repositorio remoto mediante esta orden:
+pero usando la dirección SSH de tu repositorio, que has copiado antes.
+La palabra “origin” identificará el remoto en tu repositorio local.
+Podrías haberle dado cualquier otro nombre. Pero “origin” es un estándar
+muy aceptado. A continuación, puedes enviar tu trabajo al repositorio
+remoto mediante esta orden:
 
 git push -u origin soca
 
-Con eso le estarías diciendo a Git que envíe el estado actual de tu rama local a la rama “soca” del remoto “origin”, y que además establezca esa rama remota como asociada por defecto a tu rama local. Puedes darle otro nombre a la rama remota, si lo prefieres.
+Con eso le estarías diciendo a Git que envíe el estado actual de tu rama
+local a la rama “soca” del remoto “origin”, y que además establezca esa
+rama remota como asociada por defecto a tu rama local. Puedes darle otro
+nombre a la rama remota, si lo prefieres.
 
-El hecho es que Git te permite tener varias ramas (versiones) de tu carpeta de trabajo. Y también varios remotos. Una vez que una rama remota está designada como “aguas-arriba” de una rama local, enviar actualizaciones al remoto es más fácil:
+El hecho es que Git te permite tener varias ramas (versiones) de tu
+carpeta de trabajo. Y también varios remotos. Una vez que una rama
+remota está designada como “aguas-arriba” de una rama local, enviar
+actualizaciones al remoto es más fácil:
 
 git push
 
-Ya no hace falta especificar a qué rama remota estamos enviando las actualizaciones. Desde luego, no es recomendable trabajar con más de un remoto ni más de una rama si no es estrictamente necesario.
+Ya no hace falta especificar a qué rama remota estamos enviando las
+actualizaciones. Desde luego, no es recomendable trabajar con más de un
+remoto ni más de una rama si no es estrictamente necesario.
 
 ## Traer actualizaciones del remoto a la carpeta local
 
-Una vez la rama local está configurada para prestar atención a los cambios que pueden haber aparecido en una rama remota, al ejecutar git pull, automáticamente Git intentará implementar en la carpeta local cualquier modificación que se haya producido en la rama remota.
+Una vez la rama local está configurada para prestar atención a los
+cambios que pueden haber aparecido en una rama remota, al ejecutar git
+pull, automáticamente Git intentará implementar en la carpeta local
+cualquier modificación que se haya producido en la rama remota.
 
-El comando git pull es una combinación de git fetch y git merge, que significan: “echa un vistazo al estado de la rama remota” y “fusiona la rama remota con la local”, respectivamente. Después de git fetch, puede comprobar si ha habido cambios en el remoto con git status.
+El comando git pull es una combinación de git fetch y git merge, que
+significan: “echa un vistazo al estado de la rama remota” y “fusiona la
+rama remota con la local”, respectivamente. Después de git fetch, puede
+comprobar si ha habido cambios en el remoto con git status.
 
-Cada vez que git se comunique con el remoto en Github, tu ordenador te pedirá la contraseña con la que has protegido la llave privada.
+Cada vez que git se comunique con el remoto en Github, tu ordenador te
+pedirá la contraseña con la que has protegido la llave privada.

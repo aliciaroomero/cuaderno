@@ -1,29 +1,56 @@
 ---
-title: "Práctica 11"
-author: "Alicia Romero Osuna"
-html:
-    embed-resources: true
-editor: visual
+title: "Anotación"
+lang: es
+date: today
+execute: 
+  output: true
+  error: true
 engine: knitr
+bibliography: ../../doc/references.bib
+language:
+   title-block-published: "Última actualización:"
+   section-title-references: "Bibliografía"
+format:
+   html:
+      embed-resources: true
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 # PRÁCTICA 11
 
-En esta práctica trabajaremos con los resultados de la anotación estructural realizada sobre el ensamblaje de la práctica anterior.
+En esta práctica trabajaremos con los resultados de la anotación
+estructural realizada sobre el ensamblaje de la práctica anterior.
 
 ## Datos
 
-Las evidencias que usaremos para encontrar los genes són secuencias de proteínas que esperamos encontrar codificadas en los cóntigos. Normalmente usaríamos las proteínas conocidas de alguna especie próxima. Usaremos las 6023 proteínas que sabemos que codifica el cromosoma 4 de Arabidopsis thalina. Las descargamos en Uniprot. Debido a que los programas GALBA, RepeatModeler y RepeatMaker son dificiles de instalar, hemos descargado los archivos que corresponderían a los resultados desde el aula virtual. Están situados en la carpeta results/2026-04-28.
+Las evidencias que usaremos para encontrar los genes són secuencias de
+proteínas que esperamos encontrar codificadas en los cóntigos.
+Normalmente usaríamos las proteínas conocidas de alguna especie próxima.
+Usaremos las 6023 proteínas que sabemos que codifica el cromosoma 4 de
+Arabidopsis thalina. Las descargamos en Uniprot. Debido a que los
+programas GALBA, RepeatModeler y RepeatMaker son dificiles de instalar,
+hemos descargado los archivos que corresponderían a los resultados desde
+el aula virtual. Están situados en la carpeta results/2026-04-28.
 
 ## Resultados
 
 ## 1) Modificación de los nombres de las proteínas
 
-Al descargar las proteínas del cromosoma 4 de A. thaliana, el archivo FASTA contiene cabeceras demasiado extensas. Para facilitar el trabajo de GALBA vamos a modificar las cabeceras o nombres de las secuencias.
+Al descargar las proteínas del cromosoma 4 de A. thaliana, el archivo
+FASTA contiene cabeceras demasiado extensas. Para facilitar el trabajo
+de GALBA vamos a modificar las cabeceras o nombres de las secuencias.
 
 ### Ejercicio 1
 
-Sabiendo que una forma de hacerlo es la siguiente, incluye la orden en un bloque de Bash de tu documento de Quarto de tal manera que el archivo de entrada esté en tu carpeta data y el de salida en la misma carpeta de trabajo de la práctica actual, y además, que sólo se ejecute si el archivo de salida proteinas.fasta no existe. El archivo de entrada está en la carpeta "data" y tiene el siguiente nombre: uniprotkb_proteome_UP000006548_AND_prot_2026_04_28.fasta
+Sabiendo que una forma de hacerlo es la siguiente, incluye la orden en
+un bloque de Bash de tu documento de Quarto de tal manera que el archivo
+de entrada esté en tu carpeta data y el de salida en la misma carpeta de
+trabajo de la práctica actual, y además, que sólo se ejecute si el
+archivo de salida proteinas.fasta no existe. El archivo de entrada está
+en la carpeta "data" y tiene el siguiente nombre:
+uniprotkb_proteome_UP000006548_AND_prot_2026_04_28.fasta
 
 ```{bash}
 if [ ! -f proteinas.fasta ]; then
@@ -31,19 +58,32 @@ awk '(/^>/){split($1, A, /\|/); print ">" A[2]}(/^[^>]/){print $0}' ../../data/u
 fi
 ```
 
-Cambiamos los nombres de las proteínas para facilitar el procesamiento posterior y también el funcionamiento de GALBA, como se ha mencionado anteriormente.
+Cambiamos los nombres de las proteínas para facilitar el procesamiento
+posterior y también el funcionamiento de GALBA, como se ha mencionado
+anteriormente.
 
 ## 2) Análisis de los resultados de RepeatModeler
 
 ### Ejercicio 2
 
-*Explora los resultados de RepeatModeler y trata de contestar las preguntas siguientes.*
+*Explora los resultados de RepeatModeler y trata de contestar las
+preguntas siguientes.*
 
-Entre los archivos descargados tenemos los archivos .log, que contienen la información del proceso (está tanto en la carpeta interior como exterior). Tenemos archivos .stk que son programas de alineamiento relativamente antiguos, alinea secuencias repetitivas. El archivo AT4.families.fa y el FASTA es las secuencias consenso de los elementos repetitivos. En las cabeceras nos dice en qué ronda lo ha encontrado (RepeatModeler utiliza un proceso iterativo). También nos dice el tamaño de la familia, es decir cuántos ejemplares de esta familia ha encontrado.
+Entre los archivos descargados tenemos los archivos .log, que contienen
+la información del proceso (está tanto en la carpeta interior como
+exterior). Tenemos archivos .stk que son programas de alineamiento
+relativamente antiguos, alinea secuencias repetitivas. El archivo
+AT4.families.fa y el FASTA es las secuencias consenso de los elementos
+repetitivos. En las cabeceras nos dice en qué ronda lo ha encontrado
+(RepeatModeler utiliza un proceso iterativo). También nos dice el tamaño
+de la familia, es decir cuántos ejemplares de esta familia ha
+encontrado.
 
 *A) ¿Cuántas familias de elementos transponibles se han encontrado?*
 
-Existen 24 elementos transponibles (secuencias consenso). Podemos usar el paquete de R BioStrings para leerlo. Aunque desde el terminal podemos usar:
+Existen 24 elementos transponibles (secuencias consenso). Podemos usar
+el paquete de R BioStrings para leerlo. Aunque desde el terminal podemos
+usar:
 
 ```{bash}
 grep '^>' RepeatModelerResults/At4-families.fa | wc -l
@@ -51,7 +91,8 @@ grep '^>' RepeatModelerResults/At4-families.fa | wc -l
 
 *B) ¿Cuánto duró la ejecución del programa?*
 
-1h, 2 minutos y 16 segundos. Lo tenemos en At4.log. Si queremos que quede constancia de este podemos poner:
+1h, 2 minutos y 16 segundos. Lo tenemos en At4.log. Si queremos que
+quede constancia de este podemos poner:
 
 ```{bash}
 grep "Program Time" RepeatModelerResults/At4-rmod.log
@@ -59,19 +100,33 @@ grep "Program Time" RepeatModelerResults/At4-rmod.log
 
 *C) ¿Cuál dirías que es el archivo de salida más importante?*
 
-El archivo de salida más importante es consensi.fa. Este archivo contiene las secuencias consenso de todas las familia de elementos transponibles (tal y como puede intuirse por su nombre).
+El archivo de salida más importante es consensi.fa. Este archivo
+contiene las secuencias consenso de todas las familia de elementos
+transponibles (tal y como puede intuirse por su nombre).
 
 ## 3) Suavizar la máscara
 
-La versión enmascarada tiene una máscara dura (RepeatMasker ha sustituído todos los elementos trasponibles y repeticiones por Ns), con lo que se ha perdido la información de la secuencia original en esas regiones. El programa GALBA recomienda partir de un ensamblaje con máscara suave, donde las regiones repetitivas están marcadas con letra minúscula. Para convertir la máscara dura en una máscara suave, utilizaremos bedtools.
+La versión enmascarada tiene una máscara dura (RepeatMasker ha
+sustituído todos los elementos trasponibles y repeticiones por Ns), con
+lo que se ha perdido la información de la secuencia original en esas
+regiones. El programa GALBA recomienda partir de un ensamblaje con
+máscara suave, donde las regiones repetitivas están marcadas con letra
+minúscula. Para convertir la máscara dura en una máscara suave,
+utilizaremos bedtools.
 
 ### Ejercicio 3
 
-1.  *Instala el programa bedtools siguiendo las instrucciones oportunas para tu sistema en la página oficial.*
+1.  *Instala el programa bedtools siguiendo las instrucciones oportunas
+    para tu sistema en la página oficial.*
 
-2.  *Utiliza el ensamblaje original como archivo FASTA de entrada y el archivo GFF que ha producido RepetaMasker como coordenadas de las regiones a enmascarar. Lee el manual de bedtools maskfasta en este enlace y genera el ensamblaje con máscara suave llamado At4.soft.fa.*
+2.  *Utiliza el ensamblaje original como archivo FASTA de entrada y el
+    archivo GFF que ha producido RepetaMasker como coordenadas de las
+    regiones a enmascarar. Lee el manual de bedtools maskfasta en este
+    enlace y genera el ensamblaje con máscara suave llamado
+    At4.soft.fa.*
 
-Esto compara el archivo de salida con el RepeatMasker. Dentro de la carpeta RMO1 genera una versión enmascarada de nuestro ensamblaje.
+Esto compara el archivo de salida con el RepeatMasker. Dentro de la
+carpeta RMO1 genera una versión enmascarada de nuestro ensamblaje.
 
 ```{bash}
 if [ ! -e At4.soft.fa ]; then
@@ -81,11 +136,22 @@ fi
 
 ## GALBA
 
-Al ver los resultados prot_seq_all.fa es el mismo archivo al que anteriormente le habíamos cambiado el nombre; son las proteínas que le hemos dado evidencia para que luego se compare con nuestros datos. galba.gff es el más importante - nos da la anotación del ensamblaje que hicimos del cromosoma 4 de A. thaliana. Vemos que los codones coinciden con las regiones codificantes, no hay UTRs - esto último se debee a que los datos que le hemos dado son proteínas, no tenemos datos de expresión del RNAseq. Al dar proteínas de entrada buscamos regiones que coinciden con las de las proteínas, no identificamos las regiones no-traducidas.
+Al ver los resultados prot_seq_all.fa es el mismo archivo al que
+anteriormente le habíamos cambiado el nombre; son las proteínas que le
+hemos dado evidencia para que luego se compare con nuestros datos.
+galba.gff es el más importante - nos da la anotación del ensamblaje que
+hicimos del cromosoma 4 de A. thaliana. Vemos que los codones coinciden
+con las regiones codificantes, no hay UTRs - esto último se debee a que
+los datos que le hemos dado son proteínas, no tenemos datos de expresión
+del RNAseq. Al dar proteínas de entrada buscamos regiones que coinciden
+con las de las proteínas, no identificamos las regiones no-traducidas.
 
-### Ejercicio 4 
+### Ejercicio 4
 
-*Incluye en tu documento de Quarto un bloque de código (pero no ejecutable, con la opción eval: false) como el anterior, donde los caminos TSERBA y a MINIPROTHINT se correspondan con tu propia carpeta bin, aunque no los tengas instalados.*
+*Incluye en tu documento de Quarto un bloque de código (pero no
+ejecutable, con la opción eval: false) como el anterior, donde los
+caminos TSERBA y a MINIPROTHINT se correspondan con tu propia carpeta
+bin, aunque no los tengas instalados.*
 
 ```{bash}
 #| eval: false
@@ -98,20 +164,33 @@ galba.pl --species="Arabidopsis thaliana" \
          --prot_seq=proteinas.fasta
 ```
 
-Encontrarás los resultados de GALBA en la carpeta comprimida galba.zip, en el aula virtual
+Encontrarás los resultados de GALBA en la carpeta comprimida galba.zip,
+en el aula virtual
 
-### Ejercicio 5 
+### Ejercicio 5
 
-*Échales un vistazo a los archivos de salida de GALBA y trata de sacar algo en claro.*
+*Échales un vistazo a los archivos de salida de GALBA y trata de sacar
+algo en claro.*
 
-GALBA sirve para predecir estructuras de genes que codifican proteínas en genomas eucariotas. Teniendo esto en cuenta destaco los siguientes archivos:
+GALBA sirve para predecir estructuras de genes que codifican proteínas
+en genomas eucariotas. Teniendo esto en cuenta destaco los siguientes
+archivos:
 
 -   galba.aa: contiene secuencia de aminoácidos (estructura primaria).
 
 -   prot.codingseq: contiene secuencias codificantes proteicas.
 
-Además, mediante el archivo optimize.augustus.stdout confirmo que ha utilizado AUGUSTUS, el cual es un programa que predice genes en secuencias de genomas eucariotas.
+Además, mediante el archivo optimize.augustus.stdout confirmo que ha
+utilizado AUGUSTUS, el cual es un programa que predice genes en
+secuencias de genomas eucariotas.
 
-También hay una carpeta que pone "species", la cual incluye información sobre la especie en la que se ha realizado el análisis, en este caso es *Arabidopsis Thaliana*.
+También hay una carpeta que pone "species", la cual incluye información
+sobre la especie en la que se ha realizado el análisis, en este caso es
+*Arabidopsis Thaliana*.
 
-***Más información (comentado en clase):*** Tenemos un genoma ensamblado del que conocemos las 6000 proteínas. Comparíamos lo que hemos dado con lo que hemos ofrecido. Una forma rápida sería contar cuántos genes ha identificado. Vemos que de 6000 proteínas ha encontrado 4362, por lo que le faltan bastantes genes. Si fuera un ejercicio real utilizaríamos BUSCO.
+***Más información (comentado en clase):*** Tenemos un genoma ensamblado
+del que conocemos las 6000 proteínas. Comparíamos lo que hemos dado con
+lo que hemos ofrecido. Una forma rápida sería contar cuántos genes ha
+identificado. Vemos que de 6000 proteínas ha encontrado 4362, por lo que
+le faltan bastantes genes. Si fuera un ejercicio real utilizaríamos
+BUSCO.

@@ -1,35 +1,63 @@
 ---
-title: "Práctica 8"
-author: "Alicia Romero Osuna"
-html:
-    embed-resources: true
-editor: visual
+title: "BLAST"
+lang: es
+date: today
+execute: 
+  output: true
+  error: true
 engine: knitr
+bibliography: ../../doc/references.bib
+language:
+   title-block-published: "Última actualización:"
+   section-title-references: "Bibliografía"
+format:
+   html:
+      embed-resources: true
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 # PRÁCTICA 8
 
 ## Objetivos
 
-BLAST ejecuta alineamientos locales entre una secuencia “problema” o query, generalmente no muy larga, y un conjunto grande de secuencias (la base de datos) entre las que esperamos encontrar alguna secuencia homóloga a la query. Cada secuencia de la base de datos que pueda alinearse con la query se la llama subject en el alineamiento. Los objetivos de esta práctica son:
+BLAST ejecuta alineamientos locales entre una secuencia “problema” o
+query, generalmente no muy larga, y un conjunto grande de secuencias (la
+base de datos) entre las que esperamos encontrar alguna secuencia
+homóloga a la query. Cada secuencia de la base de datos que pueda
+alinearse con la query se la llama subject en el alineamiento. Los
+objetivos de esta práctica son:
 
 1.  Identificar proteínas ortólogas entre dos especies con BLASTP.
 
 2.  Realizar un PSI-BLAST contra la base de datos Swissprot.
 
-3.  Determinar el origen de las lecturas que no pudieron ser mapeadas a su genoma de referencia, usando BLASTN *remoto*.
+3.  Determinar el origen de las lecturas que no pudieron ser mapeadas a
+    su genoma de referencia, usando BLASTN *remoto*.
 
 Este guion se dividirá en tres ejercicios con diferentes objetivos.
 
 ## Ejercicio 1
 
-**Nota:** Para realizar este ejercicio p[rimero debemos descargar desde uniprot los proteomas]{.underline} de *Buchnera aphidicola* (107806) y *Blochmannia ocreatus* (251538). Estas dos son especies bacterianas endosimbiontes. Los guardamos como dos archivos FASTA (están descomprimidos ambos): ../../data/buchnera.fa y ../../data/blochmannia.fa.
+**Nota:** Para realizar este ejercicio p[rimero debemos descargar desde
+uniprot los proteomas]{.underline} de *Buchnera aphidicola* (107806) y
+*Blochmannia ocreatus* (251538). Estas dos son especies bacterianas
+endosimbiontes. Los guardamos como dos archivos FASTA (están
+descomprimidos ambos): ../../data/buchnera.fa y
+../../data/blochmannia.fa.
 
-*Una estrategia habitual para identificar genes ortólogos es comprobar si cada uno es, respecto del otro, su mejor resultado de BLAST. Lo que en inglés llaman reciprocal best hits. Aunque se trata de un método heurístico, los resultados son bastante fiables. Vamos a practicarlo entre dos proteomas que debes haber descargado, y que primero debemos enmascarar e indexar para BLAST.*
+Una estrategia habitual para identificar genes ortólogos es comprobar si
+cada uno es, respecto del otro, su mejor resultado de BLAST. Lo que en
+inglés llaman reciprocal best hits. Aunque se trata de un método
+heurístico, los resultados son bastante fiables. Vamos a practicarlo
+entre dos proteomas que debes haber descargado, y que primero debemos
+enmascarar e indexar para BLAST.
 
 ### Enmascarar e indexar los proteomas
 
-En primer lugar enmascaramos e indexeamos los datos. Primero lo hacemos con *Buchnera*:
+En primer lugar enmascaramos e indexeamos los datos. Primero lo hacemos
+con *Buchnera*:
 
 ```{bash}
 pwd
@@ -79,9 +107,15 @@ fi
 
 ### Realizar las búsquedas de BLASTP
 
-A continuación realizamos la búsqueda BLASTP. El objetivo es encontrar la proteína de *Blochmannia ocreatus* que más se parece a cada una de las proteínas de *Buchnera aphidicola*, y viceversa. Entonces, seleccionaremos las parejas de proteínas que sean recíprocamente las más similares una de otra, por ser más probablemente ortólogas. Otras relaciones de semejanza no recíprocas pueden ser debidas a la paralogía.
+A continuación realizamos la búsqueda BLASTP. El objetivo es encontrar
+la proteína de *Blochmannia ocreatus* que más se parece a cada una de
+las proteínas de *Buchnera aphidicola*, y viceversa. Entonces,
+seleccionaremos las parejas de proteínas que sean recíprocamente las más
+similares una de otra, por ser más probablemente ortólogas. Otras
+relaciones de semejanza no recíprocas pueden ser debidas a la paralogía.
 
-En primer lugar lo hacemos de *Buchnera aphidicola* hacia *Blochmannia ocreatus*, para ello:
+En primer lugar lo hacemos de *Buchnera aphidicola* hacia *Blochmannia
+ocreatus*, para ello:
 
 ```{bash}
 
@@ -105,7 +139,9 @@ blastp -query ../../data/blochmania.fasta \
        -max_target_seqs 1
 ```
 
-**NOTA:** *Revisa los argumentos utilizados, prueba otros si quieres y asegúrate de que son adecuados. Puedes consultar la ayuda con blastp -help en el terminal.*
+**NOTA:** *Revisa los argumentos utilizados, prueba otros si quieres y
+asegúrate de que son adecuados. Puedes consultar la ayuda con blastp
+-help en el terminal.*
 
 ### Comparación de resultados
 
@@ -125,7 +161,9 @@ blo2buc <- read.table(
 
 ```
 
-**NOTA:** *Echa un vistazo a estas tablas de resultados. ¿Sabrías identificar las parejas de proteínas que son recíprocamente la que más se parece una a la otra?*
+**NOTA:** *Echa un vistazo a estas tablas de resultados. ¿Sabrías
+identificar las parejas de proteínas que son recíprocamente la que más
+se parece una a la otra?*
 
 ```{r}
 buc2blo$reverse <- blo2buc[
@@ -138,21 +176,44 @@ coincidencias <- buc2blo[
 ]
 ```
 
-Vemos que hay 433 coincidencias (he escrito "coincidencias" en la consola y obtengo 433 resultados).
+Vemos que hay 433 coincidencias (he escrito "coincidencias" en la
+consola y obtengo 433 resultados).
 
-*¡OJO!* Cuando utilizamos secuencias de proteínas para estudiar la taxonomía de las especies buscamos copias ortologas. Una forma de identificar los ortologos es descargando ambos proteomas, hacemos un BLAST y podemos encontrar más de un hit. Tenemos dos listas de resultados al realizar el BLAST. Cuando tenemos esto en R, utilizamos las herramientas para comparar y ver si entre ambas listas qué parejas son recíprocas (son el mejor hit de ambas).
+*¡OJO!* Cuando utilizamos secuencias de proteínas para estudiar la taxonomía de las especies buscamos copias ortologas. Una forma de
+identificar los ortologos es descargando ambos proteomas, hacemos un
+BLAST y podemos encontrar más de un hit. Tenemos dos listas de
+resultados al realizar el BLAST. Cuando tenemos esto en R, utilizamos
+las herramientas para comparar y ver si entre ambas listas qué parejas
+son recíprocas (son el mejor hit de ambas).
 
-Usamos la función match para encontrar en la primera tabla de proteína de *Blochmania* la que coincide en *Buchnera*. Queremos ver si cuando buscamos en *Buchnera* también aparece la mimsa en *Blochmania*. Por eso usamos la función reverse.
+Usamos la función match para encontrar en la primera tabla de proteína
+de *Blochmania* la que coincide en *Buchnera*. Queremos ver si cuando
+buscamos en *Buchnera* también aparece la mimsa en *Blochmania*. Por eso
+usamos la función reverse.
 
-**NOTA:** *¿Qué datos te gustaría representar gráficamente para ganar confianza en que los resultados son correctos y tienen sentido?*
+**NOTA:** *¿Qué datos te gustaría representar gráficamente para ganar
+confianza en que los resultados son correctos y tienen sentido?*
 
-Quizá nos interesaría representar la longitud de la proteína de ambas especies.
+Quizá nos interesaría representar la longitud de la proteína de ambas
+especies.
 
 ## Ejercicio 2
 
-**Nota:** Para realizar este ejercicio descargamos la base de datos de Swissprot para BLAST. Los archivos descargados y descomprimidos deben guardarse en la carpeta ../../data. Por tanto, los comandos siguientes deben ejecutarse desde esa carpeta, en el terminal de Bash.
+**Nota:** Para realizar este ejercicio descargamos la base de datos de
+Swissprot para BLAST. Los archivos descargados y descomprimidos deben
+guardarse en la carpeta ../../data. Por tanto, los comandos siguientes
+deben ejecutarse desde esa carpeta, en el terminal de Bash.
 
-*El PSI-BLAST nos permite identificar semejanzas sútiles, como las que existen entre miembros alejados de una superfamilia proteica. Para comprobarlo vamos a realizar una búsqueda a partir de cualquiera de las proteínas siguientes: Q9CC91, P39615, B1AJI8, P47343, Q5UPT2, Q6UDG6, A1AFY9, O59825 y P30314. Todas ellas están en Swissprot y pertenecen a una misma superfamilia. Sin embargo, un simple BLASTP con cualquiera de ellas no encuentra ninguna de las otras1. Comprobemos si con un PSI-BLAST lo conseguimos. A continuación lo intento a partir de P39615. Repite los pasos usando otra proteína de la lista como query y compara los resultados.*
+*El PSI-BLAST nos permite identificar semejanzas sútiles, como las que
+existen entre miembros alejados de una superfamilia proteica. Para
+comprobarlo vamos a realizar una búsqueda a partir de cualquiera de las
+proteínas siguientes: Q9CC91, P39615, B1AJI8, P47343, Q5UPT2, Q6UDG6,
+A1AFY9, O59825 y P30314. Todas ellas están en Swissprot y pertenecen a
+una misma superfamilia. Sin embargo, un simple BLASTP con cualquiera de
+ellas no encuentra ninguna de las otras1. Comprobemos si con un
+PSI-BLAST lo conseguimos. A continuación lo intento a partir de P39615.
+Repite los pasos usando otra proteína de la lista como query y compara
+los resultados.*
 
 ```{bash}
 # Como Swissprot debería estar ya descargada en `../../data`, podemos sacar
@@ -170,7 +231,9 @@ psiblast -db ../../data/swissprot \
          -matrix BLOSUM62
 ```
 
-Lo probamos con otra proteína de la superfamilia, en este caso B1AJI8 (he copiado el mismo código que el anterior pero lo he ajustado a B1AJI8):
+Lo probamos con otra proteína de la superfamilia, en este caso B1AJI8
+(he copiado el mismo código que el anterior pero lo he ajustado a
+B1AJI8):
 
 ```{bash}
 # Como Swissprot debería estar ya descargada en `../../data`, podemos sacar
@@ -188,19 +251,50 @@ psiblast -db ../../data/swissprot \
          -matrix BLOSUM62
 ```
 
-**NOTA:** *Consulta la ayuda de psiblast y asegúrate de entender para qué sirven los argumentos que hemos usado. Por ejemplo, ¿cuál es la diferencia entre -evalue y -inclusion_ethresh?¿Cómo harías que la búsqueda fuera más sensible todavía?*
+**NOTA:** *Consulta la ayuda de psiblast y asegúrate de entender para
+qué sirven los argumentos que hemos usado. Por ejemplo, ¿cuál es la
+diferencia entre -evalue y -inclusion_ethresh?¿Cómo harías que la
+búsqueda fuera más sensible todavía?*
 
-Inclusion_ethresh sirve para definir el valor umbral de e-valor, mientras que el e-valor nos indica el número de hits aleatorios esperados por casualidad al buscar en una base datos. Para aumentar la sensibilidad de la búsqueda se repite el psi-blast sucesivamente hasta llegar a una convergencia.
+Inclusion_ethresh sirve para definir el valor umbral de e-valor,
+mientras que el e-valor nos indica el número de hits aleatorios
+esperados por casualidad al buscar en una base datos. Para aumentar la
+sensibilidad de la búsqueda se repite el psi-blast sucesivamente hasta
+llegar a una convergencia.
 
 ## Ejercicio 3
 
-Descargamos mediante el enlace del guion del Aula Virtual el archivo comprimido `contaminacion.fa.gz`. No debe abrirse ni descomprimirse. Sólo guardadlo en la carpeta de datos tal como está. En adelante supondré que podéis acceder al archivo mediante `../../data/contaminacion.fa.gz` desde la carpeta de la práctica.
+Descargamos mediante el enlace del guion del Aula Virtual el archivo
+comprimido `contaminacion.fa.gz`. No debe abrirse ni descomprimirse.
+Sólo guardadlo en la carpeta de datos tal como está. En adelante
+supondré que podéis acceder al archivo mediante
+`../../data/contaminacion.fa.gz` desde la carpeta de la práctica.
 
-El archivo `../../data/contaminacion.fa.gz` contiene 33174 lecturas procedentes de un experimento de secuenciación del insecto *Aphis aurantii*, con Ion Torrent. ([SRR13258790](https://www.ebi.ac.uk/ena/browser/view/SRR13258790)). Concretamente son las lecturas que no han podido mapearse al genoma de referencia ([GCA_055615905](https://www.ebi.ac.uk/ena/browser/view/GCA_055615905)) de este insecto. Hay dos motivos principales por los que muchos fragmentos no pueden mapearse al genoma de referencia: o bien el genoma de referencia es incompleto, o bien los fragmentos no pertenecen a esa especie. La secuenciación no distingue al individuo de interés de sus simbiontes, parásitos o presas. Los fragmentos de ADN secuenciados que no proceden del individuo diana se consideran *contaminación*. El objetivo de este ejercicio es determinar la procedencia de estos fragmentos mediante BLASTN remoto a la base de datos *nr* (no redundante). Lo que nos interesa es sólo el origen taxonómico de la secuencia más parecida a cada una de esas lecturas.
+El archivo `../../data/contaminacion.fa.gz` contiene 33174 lecturas
+procedentes de un experimento de secuenciación del insecto *Aphis
+aurantii*, con Ion Torrent.
+([SRR13258790](https://www.ebi.ac.uk/ena/browser/view/SRR13258790)).
+Concretamente son las lecturas que no han podido mapearse al genoma de
+referencia
+([GCA_055615905](https://www.ebi.ac.uk/ena/browser/view/GCA_055615905))
+de este insecto. Hay dos motivos principales por los que muchos
+fragmentos no pueden mapearse al genoma de referencia: o bien el genoma
+de referencia es incompleto, o bien los fragmentos no pertenecen a esa
+especie. La secuenciación no distingue al individuo de interés de sus
+simbiontes, parásitos o presas. Los fragmentos de ADN secuenciados que
+no proceden del individuo diana se consideran *contaminación*. El
+objetivo de este ejercicio es determinar la procedencia de estos
+fragmentos mediante BLASTN remoto a la base de datos *nr* (no
+redundante). Lo que nos interesa es sólo el origen taxonómico de la
+secuencia más parecida a cada una de esas lecturas.
 
 ### Selección aleatoria de 20 queries
 
-Si enviamos 33174 queries a los servidores del NCBI, o bien tardarán muchas horas en devolver los resultados o simplemente interrumpirán el servicio. Cada persona escogerá 20 secuencias al azar mediante las órdenes siguientes, y después compartiremos los resultados para tener una muestra más representativa.
+Si enviamos 33174 queries a los servidores del NCBI, o bien tardarán
+muchas horas en devolver los resultados o simplemente interrumpirán el
+servicio. Cada persona escogerá 20 secuencias al azar mediante las
+órdenes siguientes, y después compartiremos los resultados para tener
+una muestra más representativa.
 
 ```{r}
 library('Biostrings')
@@ -208,4 +302,90 @@ unmapped <- readDNAStringSet('../../data/contaminacion.fa.gz')
 n <- length(unmapped)
 muestra <- unmapped[sample(1:n, 20)]
 writeXStringSet(muestra, 'muestra.fa')
+```
+
+## BLASTN remoto
+
+La orden siguiente pide una sola secuencia (la más parecida) y alguna información sobre el alineamiento, para poder garantizar la calidad del resultado.
+
+```{bash}
+if [ ! -e resultado.txt ]; then
+   blastn -query muestra.fa \
+          -db nr \
+          -out resultado.txt \
+          -outfmt '6 qaccver saccver length qlen qstart qend evalue bitscore staxid' \
+          -max_target_seqs 1 \
+          -evalue 0.001 \
+          -remote 2> /dev/null
+fi
+```
+
+## Identificación taxonómica
+
+La única información taxonómica que podemos obtener de las secuencias encontradas cuando realizamos un BLAST remoto es el identificador taxonómico. Esta restricción tiene por objetivo agilizar el servicio remoto. Ahora es asunto nuestro saber a qué especies corresponden los identificadores, de manera automática. Hay varias opciones. Para no tener que descargar la base de datos taxonómica, intentaremos recuperar la información completa con una nueva consulta remota. Esta vez, con los programas `datasets` y `dataformat` de NCBI, que ya conocéis.
+
+```{bash}
+# 1. Extraer IDs
+cut -f 9 resultado.txt | sort | uniq | paste -sd ',' > taxids.txt
+
+# 2. Ejecutar usando la ruta absoluta que confirmamos
+/home/alicia/bin/datasets summary taxonomy taxon $(cat taxids.txt) --as-json-lines | \
+/home/alicia/bin/dataformat tsv taxonomy --template tax-summary > taxreport.txt
+```
+
+```{bash}
+cut -f 9 resultado.txt | sort | uniq | paste -sd ',' > taxids.txt
+/home/alicia/bin/datasets summary taxonomy taxon $(cat taxids.txt) --as-json-lines | \
+/home/alicia/bin/dataformat tsv taxonomy --template tax-summary > taxreport.txt
+```
+
+
+# Nota
+
+*Puedes importar tanto los resultados del BLAST como el informe taxonómico a una sesión de R y determinar que fracción de las lecturas seleccionadas parecen proceder de un hemímptero y qué fracción proceden de otros organismos. Tienen sentido los resultados? Encuentras alguna secuencia de origen vegetal?*
+
+```{bash}
+# Extraemos la columna 9 (TaxID), ordenamos y quitamos duplicados
+cut -f 9 resultado.txt | sort | uniq > taxids_lista.txt
+
+# Comprobamos qué IDs tenemos (deberías ver números como 1470492, 80765, etc.)
+cat taxids_lista.txt
+```
+
+```{bash}
+# Consultamos la taxonomía y la guardamos en formato TSV
+/home/alicia/bin/datasets summary taxonomy taxon --inputfile taxids_lista.txt --as-json-lines | \
+/home/alicia/bin/dataformat tsv taxonomy --template tax-summary > taxreport.txt
+
+# Verificamos que se haya escrito correctamente
+head taxreport.txt
+```
+
+```{r}
+# Leemos los resultados del BLAST
+blast <- read.table('resultado.txt',
+   col.names = c('qaccver', 'saccver', 'length', 'qlen',
+                 'qstart', 'qend', 'evalue', 'bitscore', 'staxid'))
+
+# Leemos el informe taxonómico (usamos quote="" para evitar que se cuelgue)
+taxreport <- read.table('taxreport.txt', sep = '\t', header = TRUE, fill = TRUE, quote = "")
+
+# Unimos las tablas para asignar el Orden y el Reino a cada hit
+blast$orden <- taxreport[match(blast$staxid, taxreport$Taxid), 'Order.name']
+blast$reino <- taxreport[match(blast$staxid, taxreport$Taxid), 'Kingdom.name']
+
+# CÁLCULOS 
+
+# 1. Fracción de Hemípteros
+hemipteros <- sum(blast$orden == 'Hemiptera', na.rm = TRUE)
+frac_hemipteros <- hemipteros / nrow(blast)
+
+# 2. Fracción de Plantas (Viridiplantae)
+plantas <- sum(blast$reino == 'Viridiplantae', na.rm = TRUE)
+frac_plantas <- plantas / nrow(blast)
+
+# --- RESULTADOS ---
+cat('Fracción hemípteros:', frac_hemipteros, '\n')
+cat('Fracción plantas:', frac_plantas, '\n')
+table(blast$orden)
 ```

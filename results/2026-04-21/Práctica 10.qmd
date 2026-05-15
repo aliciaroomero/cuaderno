@@ -1,25 +1,52 @@
 ---
-title: "Práctica 10"
-author: "Alicia Romero Osuna"
-html:
-    embed-resources: true
-editor: visual
+title: "Ensamblaje de genomas"
+lang: es
+date: today
+execute: 
+  output: true
+  error: true
 engine: knitr
+bibliography: ../../doc/references.bib
+language:
+   title-block-published: "Última actualización:"
+   section-title-references: "Bibliografía"
+format:
+   html:
+      embed-resources: true
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 # PRÁCTICA 10
 
 ## Objetivo
 
-Ensamblar el genoma de un eucariota diploide con lecturas de PacBio de alta fidelidad.
+Ensamblar el genoma de un eucariota diploide con lecturas de PacBio de
+alta fidelidad.
 
 ## Datos
 
-Vamos a usar lecturas HiFi generadas por Rabanal et al. (2022) de un único individuo de la planta Arabidopsis thaliana, ecotipo Columbia (Col-0), con la tecnología SMRT de PacBio (proyecto PRJEB50694). Los datos seleccionados son solo una parte de los originales y se encuentran en el archivo At4.10.fa.gz (46 Mb), disponible en el aula virtual. También está en el espacio de disco compartido de la Universidad de Valencia, dentro del grupo de bioinformática. El archivo tendrá el siguiente path relativa: ../../data/At4.10.fa.gz.
+Vamos a usar lecturas HiFi generadas por Rabanal et al. (2022) de un
+único individuo de la planta Arabidopsis thaliana, ecotipo Columbia
+(Col-0), con la tecnología SMRT de PacBio (proyecto PRJEB50694). Los
+datos seleccionados son solo una parte de los originales y se encuentran
+en el archivo At4.10.fa.gz (46 Mb), disponible en el aula virtual.
+También está en el espacio de disco compartido de la Universidad de
+Valencia, dentro del grupo de bioinformática. El archivo tendrá el
+siguiente path relativa: ../../data/At4.10.fa.gz.
 
 ## Revisión de los datos
 
-Los datos están en formato FASTA porque contienen sólo lecturas de alta calidad, y hifiasm no utiliza la información de las calidades de cada base. El archivo está comprimido. Antes de empezar el ensamblaje deberíamos tener una idea de la cantidad de datos que tenemos. Si lo necesitas, utiliza una inteligencia artificial para responder las preguntas siguientes y anota en un bloque de código las órdenes utilizadas. Puedes hacerlo con instrucciones de Bash o de R, pero R necesitará cargar en memoria el archivo entero, lo que no sería muy práctico si se tratara de un archivo 10 o 50 veces mayor.
+Los datos están en formato FASTA porque contienen sólo lecturas de alta
+calidad, y hifiasm no utiliza la información de las calidades de cada
+base. El archivo está comprimido. Antes de empezar el ensamblaje
+deberíamos tener una idea de la cantidad de datos que tenemos. Si lo
+necesitas, utiliza una inteligencia artificial para responder las
+preguntas siguientes y anota en un bloque de código las órdenes
+utilizadas. Puedes hacerlo con instrucciones de Bash o de R, pero R
+necesitará cargar en memoria el archivo entero, lo que no sería muy
+práctico si se tratara de un archivo 10 o 50 veces mayor.
 
 ### Ejercicio 1
 
@@ -29,7 +56,8 @@ Los datos están en formato FASTA porque contienen sólo lecturas de alta calida
 zgrep -c "^>" ../../data/At4.10.fa.gz
 ```
 
-El archivo presenta 13812 secuencias. Usamos el comando zgrep -c "\^\>", ya que cuenta las líneas que empiezan por el símbolo de cabecera FASTA.
+El archivo presenta 13812 secuencias. Usamos el comando zgrep -c "\^\>",
+ya que cuenta las líneas que empiezan por el símbolo de cabecera FASTA.
 
 *B) ¿Qué longitudes mínima, media y máxima tienen las secuencias?*
 
@@ -61,9 +89,12 @@ END {
 }'
 ```
 
-Obtenemos que el número de bases es de 250599484, la longitud mínima es 2942 y la máxima es 59075, la longitud media es de 18143.6.
+Obtenemos que el número de bases es de 250599484, la longitud mínima es
+2942 y la máxima es 59075, la longitud media es de 18143.6.
 
-D\) *Si se estimara que el genoma a ensamblar fuera de sólo 19 millones de bases, ¿cuál sería la cobertura esperada? Como conocemos el número total de bases:*
+D\) *Si se estimara que el genoma a ensamblar fuera de sólo 19 millones
+de bases, ¿cuál sería la cobertura esperada? Como conocemos el número
+total de bases:*
 
 ```{bash}
 echo "250599484 / 190000000" | bc -l
@@ -73,14 +104,26 @@ La cobertura esperada sería de 1.31894465263157894736.
 
 ## Ensamblaje
 
-El programa hifiasm produce varios archivos de salida. Para tener la carpeta de trabajo ordenada, es recomendable crear un subcarpeta donde poder guardarlos. Si fuéramos a probar más de una estrategia de ensamblado, guardaríamos los resultados de cada intento en una carpeta diferente, que podríamos nombrar asm1, asm2, etc. Aunque sólo realicemos un ensamblaje, crearemos la carpeta asm1 para guardar los resultados en ella.
+El programa hifiasm produce varios archivos de salida. Para tener la
+carpeta de trabajo ordenada, es recomendable crear un subcarpeta donde
+poder guardarlos. Si fuéramos a probar más de una estrategia de
+ensamblado, guardaríamos los resultados de cada intento en una carpeta
+diferente, que podríamos nombrar asm1, asm2, etc. Aunque sólo realicemos
+un ensamblaje, crearemos la carpeta asm1 para guardar los resultados en
+ella.
 
 ```{bash}
 # Con la ejecución condicional nos ahorramos algún mensaje de error:
 if [ ! -d asm1 ]; then mkdir asm1; fi
 ```
 
-El ensamblaje de estas lecturas puede durar unos minutos. No queremos tener que ejecutarlo cada vez que compilamos el documento de Quarto. Tenemos dos opciones: o usamos la directriz #\| cache: true al principio del bloque de código o controlamos directamente la ejecución condicional con Bash. Si usamos el método que ofrece Quarto, aparecerá una nueva carpeta que guarda resultados previos y que estaría bien incluir en el repositorio de Git. Usamos Bash:
+El ensamblaje de estas lecturas puede durar unos minutos. No queremos
+tener que ejecutarlo cada vez que compilamos el documento de Quarto.
+Tenemos dos opciones: o usamos la directriz #\| cache: true al principio
+del bloque de código o controlamos directamente la ejecución condicional
+con Bash. Si usamos el método que ofrece Quarto, aparecerá una nueva
+carpeta que guarda resultados previos y que estaría bien incluir en el
+repositorio de Git. Usamos Bash:
 
 ```{bash}
 . ~/.bashrc
@@ -90,34 +133,57 @@ if [ ! -e asm1/At4.bp.p_ctg.gfa ]; then
 fi
 ```
 
-En mi caso, R no reconoce hifiasm. He utilizado el PATH. Son problemas de relacionar bash con R studio. Otra opción es al principio del bloque definir una variable HF = \~/bin/hifiasm/hifiasm (esto último es el path). De forma que cada vez que queremos ejectuar hifiasm ejecutamos dolar-HF. Si otra persona lo tiene que ejecutar varias veces, sólo se cambia una línea.
-Otra solución en vez de definir una variable podemos definirr al principio: export PATH = \~/bin/hifiasm/hifiasm:\$PATH. Tenemos que tener en cuenta que el orden importa, porque empieza a buscar cualquier ejecutables a partir de la primera carpeta del PATH. Es mejor añadir algo al final del PATH. Si al principio del bloque exportamos el nuevo PATH, encontrará a hifiasm. En cada bloque R studio inicia una nueva sesión de bash.
+En mi caso, R no reconoce hifiasm. He utilizado el PATH. Son problemas
+de relacionar bash con R studio. Otra opción es al principio del bloque
+definir una variable HF = \~/bin/hifiasm/hifiasm (esto último es el
+path). De forma que cada vez que queremos ejectuar hifiasm ejecutamos
+dolar-HF. Si otra persona lo tiene que ejecutar varias veces, sólo se
+cambia una línea. Otra solución en vez de definir una variable podemos
+definirr al principio: export PATH = \~/bin/hifiasm/hifiasm:\$PATH.
+Tenemos que tener en cuenta que el orden importa, porque empieza a
+buscar cualquier ejecutables a partir de la primera carpeta del PATH. Es
+mejor añadir algo al final del PATH. Si al principio del bloque
+exportamos el nuevo PATH, encontrará a hifiasm. En cada bloque R studio
+inicia una nueva sesión de bash.
 
 Las opciones significan lo siguiente:
 
--   **-o asm1/At4:** usa el prefijo asm1/At4 para los archivos de salida.
+-   **-o asm1/At4:** usa el prefijo asm1/At4 para los archivos de
+    salida.
 
 -   **-t 2:** usa dos procesadores. Por defecto usaría uno.
 
--   **-f 0:** inhabilita el uso de un filtro de Bloom (Melsted and Pritchard 2011) durante la corrección de errores, que ocuparía 16 Gb de memoria.
+-   **-f 0:** inhabilita el uso de un filtro de Bloom (Melsted and
+    Pritchard 2011) durante la corrección de errores, que ocuparía 16 Gb
+    de memoria.
 
 -   **../../data/At4.10.fa.gz:** archivo con los datos de partida.
 
--   **2\> asm1/hifiasm.log:** guarda los numerosos mensajes que hifiasm envía al error estándar en un archivo asm1/hifiasm.log. Esto evita que esos mensajes se acumulen en el informe HTML.
+-   **2\> asm1/hifiasm.log:** guarda los numerosos mensajes que hifiasm
+    envía al error estándar en un archivo asm1/hifiasm.log. Esto evita
+    que esos mensajes se acumulen en el informe HTML.
 
 ### Ejercicio 2
 
-*Consulta la ayuda de hifiasm (hifiasm -h) y contesta las preguntas siguientes:*
+*Consulta la ayuda de hifiasm (hifiasm -h) y contesta las preguntas
+siguientes:*
 
 *¡OJO!* El programa R no reconoce en mi path a hifiasm.
 
-*A) ¿Los parámetros corresponden al ensamblaje de un genoma haploide o diploide?* Sabemos que el genoma es diploide debido a que hifiasm genera archivos que incluyen hap1 o hap2, que corresponden a los cóntigos del haplotipo 1 y haplotipo 2.
+*A) ¿Los parámetros corresponden al ensamblaje de un genoma haploide o
+diploide?* Sabemos que el genoma es diploide debido a que hifiasm genera
+archivos que incluyen hap1 o hap2, que corresponden a los cóntigos del
+haplotipo 1 y haplotipo 2.
 
-*B) Qué nivel de eliminación de duplicaciones hemos aplicado? (El paso de eliminar duplicaciones sirve para que las zonas de alta heterocigosidad no sean ensambladas como contigs diferentes).*
+*B) Qué nivel de eliminación de duplicaciones hemos aplicado? (El paso
+de eliminar duplicaciones sirve para que las zonas de alta
+heterocigosidad no sean ensambladas como contigs diferentes).*
 
-El ensamblado muestra únicamente contigs primarios. Asumimos que se ha aplicado una purga excesiva de duplicaciones.
+El ensamblado muestra únicamente contigs primarios. Asumimos que se ha
+aplicado una purga excesiva de duplicaciones.
 
-*C) Si tuvieramos lecturas ultra-largas, ¿con qué opción o argumento añadiríamos esa información?*
+*C) Si tuvieramos lecturas ultra-largas, ¿con qué opción o argumento
+añadiríamos esa información?*
 
 Se incorporarían utilizando --ul.
 
@@ -125,15 +191,21 @@ Se incorporarían utilizando --ul.
 
 ### Ejercicio 3
 
-*Consulta la descripción de los archivos de salida y contesta las preguntas siguientes:*
+*Consulta la descripción de los archivos de salida y contesta las
+preguntas siguientes:*
 
 *A) ¿Dónde están las secuencias que componen el ensamblaje?*
 
-Las secuencias están en los archivos GFA (Graphical Fragment Assembly) excepto en los noseq.gfa que son archivos sin secuencias (versión simplificada para visualizarlo)
+Las secuencias están en los archivos GFA (Graphical Fragment Assembly)
+excepto en los noseq.gfa que son archivos sin secuencias (versión
+simplificada para visualizarlo)
 
 *B) En los archivos .gfa, ¿qué son las líneas que empiezan por ‘A’?*
 
-Incluyen la información de las lecturas usadas para construir el cóntigo. Cada línea A es de texto plano, está separada mediante tabulador y las columnas aparecen en el orden que aparecen en la página web.
+Incluyen la información de las lecturas usadas para construir el
+cóntigo. Cada línea A es de texto plano, está separada mediante
+tabulador y las columnas aparecen en el orden que aparecen en la página
+web.
 
 *C) ¿Qué información tiene los archivos .bed?*
 
@@ -141,13 +213,18 @@ Incluye la información de las lecturas de baja calidad.
 
 *D) ¿Cuál es la cobertura media estimada de las secuencias homocigotas?*
 
-En el archivo que hifiasm encontramos lo siguiente: \[M::purge_dups\] homozygous read coverage threshold: 12.
+En el archivo que hifiasm encontramos lo siguiente: \[M::purge_dups\]
+homozygous read coverage threshold: 12.
 
 *E) ¿Y la de las heterocigotas?*
 
-En un grafo observaríamos dos picos en muestras homocigotas. El pico menor se encuentra alrededor de la cobertura heterocigota, mientras que el mayor correspondería a la de las homocigotas.
+En un grafo observaríamos dos picos en muestras homocigotas. El pico
+menor se encuentra alrededor de la cobertura heterocigota, mientras que
+el mayor correspondería a la de las homocigotas.
 
-Los ensamblajes primario y por haplotipos se presentan en formato GFA. Para extraer las secuencias en formato FASTA podemos usar el pequeño script siguiente, en lenguaje AWK, desde el terminal de Bash:
+Los ensamblajes primario y por haplotipos se presentan en formato GFA.
+Para extraer las secuencias en formato FASTA podemos usar el pequeño
+script siguiente, en lenguaje AWK, desde el terminal de Bash:
 
 ```{bash}
 awk '(/^S/){print ">" $2 "\n" $3}' asm1/At4.bp.p_ctg.gfa > asm1/At4.fa
@@ -155,7 +232,13 @@ awk '(/^S/){print ">" $2 "\n" $3}' asm1/At4.bp.p_ctg.gfa > asm1/At4.fa
 
 ## Calidad del ensamblaje
 
-Para obtener las estadísticas del ensamblaje utilizaremos el programa compleasm (Huang and Li 2023), que no está instalado en el ordenador virtual. Está programado en Python y depende del módulo pandas de Python. En WSL, este módulo o paquete probablemente pueda instalarse con apt install python3-pandas. Alternativamente, en los sistemas con conda podéis hacer conda install pandas. En el ordenador virtual, el módulo pandas ya está disponible.
+Para obtener las estadísticas del ensamblaje utilizaremos el programa
+compleasm (Huang and Li 2023), que no está instalado en el ordenador
+virtual. Está programado en Python y depende del módulo pandas de
+Python. En WSL, este módulo o paquete probablemente pueda instalarse con
+apt install python3-pandas. Alternativamente, en los sistemas con conda
+podéis hacer conda install pandas. En el ordenador virtual, el módulo
+pandas ya está disponible.
 
 ```{bash}
 cd ~/bin

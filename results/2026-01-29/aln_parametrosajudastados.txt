@@ -1,6 +1,6 @@
 ########################################
 # Program: needle
-# Rundate: Mon 11 May 2026 19:28:41
+# Rundate: Fri 15 May 2026 18:30:47
 # Commandline: needle
 #    -asequence HumanChr17.fa
 #    -bsequence HumanSMARCD2.fa

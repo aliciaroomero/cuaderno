@@ -1,10 +1,21 @@
 ---
-title: "Práctica 7"
-author: "Alicia Romero Osuna"
-html:
-    embed-resources: true
-editor: visual
+title: "Visualización y exploración de datos"
+lang: es
+date: today
+execute: 
+  output: true
+  error: true
 engine: knitr
+bibliography: ../../doc/references.bib
+language:
+   title-block-published: "Última actualización:"
+   section-title-references: "Bibliografía"
+format:
+   html:
+      embed-resources: true
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 # PRÁCTICA 7
@@ -13,20 +24,32 @@ engine: knitr
 
 1.  Practicar la representación gráfica de datos con `ggplot2`.
 2.  Aprender lo que es una gráfica volcán y una gráfica de Manhattan.
-3.  Demostrar que la exploración gráfica puede ayudarnos a comprender los datos.
+3.  Demostrar que la exploración gráfica puede ayudarnos a comprender
+    los datos.
 
 ## Datos
 
-En esta sesión, trabajaremos con los resultados de un análisis de asociación genómica entre un fenotipo cuantitativo y los genotipos de 195 peces en 11746 posiciones variables o SNPs de su genoma. El archivo `gwas.txt` ha sido obtenido con el programa [PLINK2](https://www.cog-genomics.org/plink/2.0/) [@Purcell2007; @Chang2015]. Contiene 16 columnas, descritas a continuación y también [en este enlace](https://www.cog-genomics.org/plink/2.0/formats#glm_linear):
+En esta sesión, trabajaremos con los resultados de un análisis de
+asociación genómica entre un fenotipo cuantitativo y los genotipos de
+195 peces en 11746 posiciones variables o SNPs de su genoma. El archivo
+`gwas.txt` ha sido obtenido con el programa
+[PLINK2](https://www.cog-genomics.org/plink/2.0/) [@Purcell2007;
+@Chang2015]. Contiene 16 columnas, descritas a continuación y también
+[en este
+enlace](https://www.cog-genomics.org/plink/2.0/formats#glm_linear):
 
--   **CHROM**, **POS**, **ID**: cromosoma, posición e identificador del SNP.
+-   **CHROM**, **POS**, **ID**: cromosoma, posición e identificador del
+    SNP.
 -   **REF**: alelo de referencia.
 -   **ALT**: alelo alternativo.
--   **PROVISIONAL_REF.**: indica si el alelo de referencia es provisional o no.
--   **A1**: alelo cuya dosis se usa en la regresión como variable independiente.
+-   **PROVISIONAL_REF.**: indica si el alelo de referencia es
+    provisional o no.
+-   **A1**: alelo cuya dosis se usa en la regresión como variable
+    independiente.
 -   **OMITTED**: el otro alelo.
 -   **A1_FREQ**: frecuencia del alelo A1 en la población.
--   **TEST**: test estadístico aplicado. *ADD*: el efecto aditivo del alelo A1 es nulo.
+-   **TEST**: test estadístico aplicado. *ADD*: el efecto aditivo del
+    alelo A1 es nulo.
 -   **OBS_CT**: tamaño muestral (número de individuos) en la regresión.
 -   **BETA**: coeficiente de regresión estimado para el alelo A1.
 -   **SE**: error estándar del coeficiente de regresión.
@@ -34,7 +57,8 @@ En esta sesión, trabajaremos con los resultados de un análisis de asociación 
 -   **P**: valor *p* del estadístico.
 -   **ERRCODE**: código de error, si lo hay, o bien "." (sin error).
 
-Cargamos los datos en una sesión de R para empezar a explorarlos, y activamos el paquete `ggplot2`, que usaremos después.
+Cargamos los datos en una sesión de R para empezar a explorarlos, y
+activamos el paquete `ggplot2`, que usaremos después.
 
 ```{r}
 library('ggplot2')
@@ -43,19 +67,26 @@ gwas <- read.table('gwas.txt')
 
 ### Desafío
 
-*La orden `read.table('gwas.txt')` no da error, pero es errónea. ¿Puedes arreglarla?*
+*La orden `read.table('gwas.txt')` no da error, pero es errónea. ¿Puedes
+arreglarla?*
 
-Observamos que los "headers" de la tabla están incorporados como si fueran datos. Para solucionarlo podemos explicar que los datos que corresponden a la primera columna son el nombre de las columnas. Por tanto:
+Observamos que los "headers" de la tabla están incorporados como si
+fueran datos. Para solucionarlo podemos explicar que los datos que
+corresponden a la primera columna son el nombre de las columnas. Por
+tanto:
 
 ```{r}
 gwas <- read.table('gwas.txt' , header=TRUE)
 ```
 
-En la consola he escrito "gwas" para comprobar que se ha hecho correctamente.
+En la consola he escrito "gwas" para comprobar que se ha hecho
+correctamente.
 
 ## Comprobar las suposiciones
 
-Sabemos que el estadístico *T* es la relación entre la diferencia del valor estimado de un parámetro ($\beta$) respecto su valor asumido (0) y el error estándar de la estimación. Comprobémoslo con `ggplot()`:
+Sabemos que el estadístico *T* es la relación entre la diferencia del
+valor estimado de un parámetro ($\beta$) respecto su valor asumido (0) y
+el error estándar de la estimación. Comprobémoslo con `ggplot()`:
 
 ```{r}
 #| warning: false
@@ -69,11 +100,17 @@ ggplot(data = gwas,
 
 ### Desafío
 
-*Comprueba gráficamente las suposiciones siguientes. Esfuérzate por imaginar qué forma esperas que adopte la gráfica en cada caso antes de representarla. Si en algún caso encuentras una relación diferente a la esperada, trata de explicarte por qué.*
+*Comprueba gráficamente las suposiciones siguientes. Esfuérzate por
+imaginar qué forma esperas que adopte la gráfica en cada caso antes de
+representarla. Si en algún caso encuentras una relación diferente a la
+esperada, trata de explicarte por qué.*
 
 1.  *El valor p sólo depende del estadístico T.*
 
-Se aprecia que cuando el valor del test estadístico es cero, el valor de p es 1. Esto coincide con lo que esperamos, ya que el valor máximo que puede adoptar el p-valor es 1. Además, el valor mínimo del valor p también es cero, tal y como se aprecia en el gráfico.
+Se aprecia que cuando el valor del test estadístico es cero, el valor de
+p es 1. Esto coincide con lo que esperamos, ya que el valor máximo que
+puede adoptar el p-valor es 1. Además, el valor mínimo del valor p
+también es cero, tal y como se aprecia en el gráfico.
 
 ```{r}
 #| warning: false
@@ -84,9 +121,13 @@ ggplot(data = gwas,
    geom_point() 
 ```
 
-2.  *El alelo A1 es siempre el que tiene la frecuencia más baja, en estos datos.*
+2.  *El alelo A1 es siempre el que tiene la frecuencia más baja, en
+    estos datos.*
 
-Podemos representarlo como un histograma. Si asumimos que son dos alelos la frecuencia máxima en la que uno de los dos puede aparecer es 0,5. Los valores que obtenemos están entre 0 y 0,5, lo que conicide con lo esperado.
+Podemos representarlo como un histograma. Si asumimos que son dos alelos
+la frecuencia máxima en la que uno de los dos puede aparecer es 0,5. Los
+valores que obtenemos están entre 0 y 0,5, lo que conicide con lo
+esperado.
 
 ```{r}
 #| warning: false
@@ -114,7 +155,20 @@ ggplot(data = gwas,
 
 4.  *La distribución de valores p se hace uniforme hacia la derecha.*
 
-A veces no sucede y se da una forma bimodal. Si todas las hipotesis fueran nulas (no hay asociación estadística entre SNP y el fenotipo), la distribución teórica sería plana, completamente uniforme por la definición de valor p. Cuando vemos una distribución con un pico del cero tenemos la mezcla de dos distribuciones: las de las hipotesis nulas y la fracción que contiene hipotesis nulas falsas (con p-valores cercanos a cero). Podemos estimar la fracción de SNP asociados estadísticamente con el fenotipo. Por mucho que nos acerquemos a p-valor cero, siempre tendremos una fracción de SNP que están ahí "por casualidad", es decir, serán falsos positivos. También habrá falsos negativos, son SNP que no podemos detectar porque tienen valores p superiores a umbrales sensibles. También representamos un histograma para observar si se cumplee la afirmación. En este caso vemos que la distribución es hacia la izquierda, por lo comentado previamente.
+A veces no sucede y se da una forma bimodal. Si todas las hipotesis
+fueran nulas (no hay asociación estadística entre SNP y el fenotipo), la
+distribución teórica sería plana, completamente uniforme por la
+definición de valor p. Cuando vemos una distribución con un pico del
+cero tenemos la mezcla de dos distribuciones: las de las hipotesis nulas
+y la fracción que contiene hipotesis nulas falsas (con p-valores
+cercanos a cero). Podemos estimar la fracción de SNP asociados
+estadísticamente con el fenotipo. Por mucho que nos acerquemos a p-valor
+cero, siempre tendremos una fracción de SNP que están ahí "por
+casualidad", es decir, serán falsos positivos. También habrá falsos
+negativos, son SNP que no podemos detectar porque tienen valores p
+superiores a umbrales sensibles. También representamos un histograma
+para observar si se cumplee la afirmación. En este caso vemos que la
+distribución es hacia la izquierda, por lo comentado previamente.
 
 ```{r}
 #| warning: false
@@ -127,7 +181,11 @@ ggplot(data = gwas,
 
 ## Agrupación de datos
 
-Podemos mapear una variable categórica a un estético como el color, el tipo de línea o la forma del punto, para representar datos de diferentes categorías separadamente. A continuación usamos el color para resumir la relación entre frecuencia alélica y error estándar del estadístico, según el número de individuos utilizados.
+Podemos mapear una variable categórica a un estético como el color, el
+tipo de línea o la forma del punto, para representar datos de diferentes
+categorías separadamente. A continuación usamos el color para resumir la
+relación entre frecuencia alélica y error estándar del estadístico,
+según el número de individuos utilizados.
 
 ```{r}
 #| warning: false
@@ -159,7 +217,9 @@ ggplot(data = gwas,
 
 ### Desafíos
 
-1.  *Haz que no sólo las líneas, sino también los puntos tengan colores diferentes, que correspondan a los valores de OBS_CT, en la gráfica donde has usado `geom_smooth()`.*
+1.  *Haz que no sólo las líneas, sino también los puntos tengan colores
+    diferentes, que correspondan a los valores de OBS_CT, en la gráfica
+    donde has usado `geom_smooth()`.*
 
 ```{r}
 #| warning: false
@@ -171,7 +231,8 @@ ggplot(data = gwas,
    geom_smooth(mapping = aes(color = factor(OBS_CT)), se = FALSE)
 ```
 
-2.  *Añade una línea suavizada (`geom_smooth()`) a cada cromosoma en el gráfico anterior.*
+2.  *Añade una línea suavizada (`geom_smooth()`) a cada cromosoma en el
+    gráfico anterior.*
 
 ```{r}
 #| warning: false
@@ -201,7 +262,11 @@ Escribimos previamente lo siguiente:
 
 ## Agrupación de datos y estadísticos
 
-Al examinar la relación entre el error estándar y el tamaño muestral, podemos tratar el tamaño muestral como variable categórica, porque tiene sólo 7 valores diferentes. Observa cómo en el bloque siguiente añadimos información sobre la media de cada categoría sin modificar el marco de datos, aprovechando la función `stat_summary()`:
+Al examinar la relación entre el error estándar y el tamaño muestral,
+podemos tratar el tamaño muestral como variable categórica, porque tiene
+sólo 7 valores diferentes. Observa cómo en el bloque siguiente añadimos
+información sobre la media de cada categoría sin modificar el marco de
+datos, aprovechando la función `stat_summary()`:
 
 ```{r}
 #| warning: false
@@ -242,36 +307,66 @@ ggplot(data = gwas, aes(x = OBS_CT, y = SE)) +
 
 1.  *¿Para qué sirve la opción `position = 'jitter'`?*
 
-    Sirve para mejorar la presentación de los gráficos y evitar overplotting. Es una opción para los puntos; indica que introduzca un poco de ruido en la posición de las x para evitar que haya "overplotting" y se vea más fácilmente. Evitamos que se representen los puntos unos sobre otros.
+    Sirve para mejorar la presentación de los gráficos y evitar
+    overplotting. Es una opción para los puntos; indica que introduzca
+    un poco de ruido en la posición de las x para evitar que haya
+    "overplotting" y se vea más fácilmente. Evitamos que se representen
+    los puntos unos sobre otros.
 
-    Otra alternativa es geom_heox para representar una densidad con colores.
+    Otra alternativa es geom_heox para representar una densidad con
+    colores.
 
-2.  *¿Por qué en la gráfica de violines teníamos que especificar `group = 1` y en la siguiente no, al representar la línea?*
+2.  *¿Por qué en la gráfica de violines teníamos que especificar
+    `group = 1` y en la siguiente no, al representar la línea?*
 
-    Usamos el group=1 para unir todos los valores de una línea. Primero ponemos group=1 para que no ponga una línea en cada punto, sino que sea una única línea. En el segundo caso, la x no está definida como un factor sino como una variable numérica. En el primer caso agrupaba de acuerdo a la variable categórica, en el segundo no hay ningún motivo para agrupar los puntos por lo que no hace falta decirlo explicitamente.
+    Usamos el group=1 para unir todos los valores de una línea. Primero
+    ponemos group=1 para que no ponga una línea en cada punto, sino que
+    sea una única línea. En el segundo caso, la x no está definida como
+    un factor sino como una variable numérica. En el primer caso
+    agrupaba de acuerdo a la variable categórica, en el segundo no hay
+    ningún motivo para agrupar los puntos por lo que no hace falta
+    decirlo explicitamente.
 
-3.  *¿Para qué sirve la función `factor()` al representar la gráfica de violines?*
+3.  *¿Para qué sirve la función `factor()` al representar la gráfica de
+    violines?*
 
-    Sirve para que tome el número de individuos como una variable categórica.
+    Sirve para que tome el número de individuos como una variable
+    categórica.
 
-4.  *¿Se te ocurre alguna otra manera de combinar datos y sus estadísticos (como la media) en un mismo gráfico, sin usar `stat_summary()`? ¿Qué método te gusta más?*
+4.  *¿Se te ocurre alguna otra manera de combinar datos y sus
+    estadísticos (como la media) en un mismo gráfico, sin usar
+    `stat_summary()`? ¿Qué método te gusta más?*
 
-    Podríamos generar otro marco de datos en el que tuvieramos la media que corresponde a cada grupo; implicaría generar otro marco de datos y unir los datos secundarios en el geom_point. No definimos los datos que estamos usando en los geométricos, sino que utiliza los que se han empleado anteriores. Es más trabajo.
+    Podríamos generar otro marco de datos en el que tuvieramos la media
+    que corresponde a cada grupo; implicaría generar otro marco de datos
+    y unir los datos secundarios en el geom_point. No definimos los
+    datos que estamos usando en los geométricos, sino que utiliza los
+    que se han empleado anteriores. Es más trabajo.
 
-    La función de stat_summary es muy práctico para no tener que calcular las medias y evitar tocar los datos.
+    La función de stat_summary es muy práctico para no tener que
+    calcular las medias y evitar tocar los datos.
 
-Por otro lado, para [guardar los gráficos]{.underline} podemos usar ggsave(), se guardará el último gráfico creado. Es interesante para cuando trabajamos con muchos gráficos.
+Por otro lado, para [guardar los gráficos]{.underline} podemos usar
+ggsave(), se guardará el último gráfico creado. Es interesante para
+cuando trabajamos con muchos gráficos.
 
 ## Barras
 
-Si combinamos el alelo A1 con el OMITTED, clasificamos cada SNP en una de las 12 posibles combinaciones de dos nucleótidos diferentes. Podemos representar las frecuencias de los 12 tipos de SNPs con un gráfico de barras. Obsérvalo e intenta explicar el patrón.
+Si combinamos el alelo A1 con el OMITTED, clasificamos cada SNP en una
+de las 12 posibles combinaciones de dos nucleótidos diferentes. Podemos
+representar las frecuencias de los 12 tipos de SNPs con un gráfico de
+barras. Obsérvalo e intenta explicar el patrón.
 
 ```{r}
 gwas$ALLELES <- paste0(gwas$A1, gwas$OMITTED)
 ggplot(data = gwas, mapping = aes(x = ALLELES)) + geom_bar(stat = 'count')
 ```
 
-`geom_bar()` automáticamente representa el número de observaciones de cada tipo. Este geométrico usa el estético `fill` para el color de las barras. Podemos mapear una variable categórica a `fill`. Por ejemplo, ahora que tenemos clasificados los SNPs en 12 categorías, veamos cuántos hay de cada tipo en cada cromosoma:
+`geom_bar()` automáticamente representa el número de observaciones de
+cada tipo. Este geométrico usa el estético `fill` para el color de las
+barras. Podemos mapear una variable categórica a `fill`. Por ejemplo,
+ahora que tenemos clasificados los SNPs en 12 categorías, veamos cuántos
+hay de cada tipo en cada cromosoma:
 
 ```{r}
 ggplot(data = gwas, mapping = aes(x= CHROM, fill = ALLELES)) +
@@ -280,14 +375,30 @@ ggplot(data = gwas, mapping = aes(x= CHROM, fill = ALLELES)) +
 
 ## Desafíos
 
-1.  *Genera una nueva variable categórica en `gwas` que indique si el SNP es una transición (AG, GA, CT, TC) o una transversión (los otros) y comprueba con un diagrama de barras si las proporciones son comparables entre cromosomas.*
-2.  *Mira también si existe relación entre el tipo de mutación y la frecuencia alélica.*
+1.  *Genera una nueva variable categórica en `gwas` que indique si el
+    SNP es una transición (AG, GA, CT, TC) o una transversión (los
+    otros) y comprueba con un diagrama de barras si las proporciones son
+    comparables entre cromosomas.*
+2.  *Mira también si existe relación entre el tipo de mutación y la
+    frecuencia alélica.*
 
 ## Gráficas de volcán
 
-Las gráficas de volcán representan simultáneamente la significación de cada resultado (valor *p*) y la magnitud (y el signo) del efecto estimado. Los valores *p* se muestran en escala logarítmica y con el signo cambiado, para que los resultados más significativos destaquen como *mayores*. Podemos añadir algunas líneas que indiquen los umbrales arbitrarios que utilizamos para seleccionar los resultados creíbles, o bien añadir color a los puntos seleccionados como positivos. A la hora de decidir estos umbrales es fundamental conocer la tasa de falsos positivos esperada con cada umbral (FDR). Para ello, añadimos al marco de datos una columna con el valor *q* [^1], calculado con la función `qvalue()` del paquete `qvalue` [@qvalue].
+Las gráficas de volcán representan simultáneamente la significación de
+cada resultado (valor *p*) y la magnitud (y el signo) del efecto
+estimado. Los valores *p* se muestran en escala logarítmica y con el
+signo cambiado, para que los resultados más significativos destaquen
+como *mayores*. Podemos añadir algunas líneas que indiquen los umbrales
+arbitrarios que utilizamos para seleccionar los resultados creíbles, o
+bien añadir color a los puntos seleccionados como positivos. A la hora
+de decidir estos umbrales es fundamental conocer la tasa de falsos
+positivos esperada con cada umbral (FDR). Para ello, añadimos al marco
+de datos una columna con el valor *q* [^1], calculado con la función
+`qvalue()` del paquete `qvalue` [@qvalue].
 
-[^1]: El valor *q* de un test es la proporción de falsos positivos que esperamos entre todos los resultados con un valor *p* menor o igual al de ese test.
+[^1]: El valor *q* de un test es la proporción de falsos positivos que
+    esperamos entre todos los resultados con un valor *p* menor o igual
+    al de ese test.
 
 ```{r}
 library('qvalue')
@@ -306,12 +417,22 @@ ggplot(data = gwas,
 ### Desafíos
 
 1.  *Genera una gráfica de volcán para cada cromosoma.*
-2.  *El número de SNPs cuyo genotipo está significativamente asociado al fenotipo, ¿te parece elevado o bajo?*
-3.  *Escoge un umbral y clasifica los SNPs en "positivos" y "negativos", y explora la proporción de positivos por cromosoma. ¿Puedes hacerlo sin añadir una columna al marco de datos?*
+2.  *El número de SNPs cuyo genotipo está significativamente asociado al
+    fenotipo, ¿te parece elevado o bajo?*
+3.  *Escoge un umbral y clasifica los SNPs en "positivos" y "negativos",
+    y explora la proporción de positivos por cromosoma. ¿Puedes hacerlo
+    sin añadir una columna al marco de datos?*
 
 ## Gráfica de Manhattan
 
-Las gráficas más características de los estudios de asociación genómica son las de Manhattan, donde la posición de los puntos a lo largo del eje horizontal se corresponde con la posición en el cromosoma, y la altura del punto es proporcional a su significación. Lo difícil es poner los cromosomas unos detrás de otros y alternar el color de los puntos en cada cromosoma. Para ello, no tenemos más remedio que añadir algunas columnas al marco de datos (o bien usar algún paquete de R específico, pero no hace falta).
+Las gráficas más características de los estudios de asociación genómica
+son las de Manhattan, donde la posición de los puntos a lo largo del eje
+horizontal se corresponde con la posición en el cromosoma, y la altura
+del punto es proporcional a su significación. Lo difícil es poner los
+cromosomas unos detrás de otros y alternar el color de los puntos en
+cada cromosoma. Para ello, no tenemos más remedio que añadir algunas
+columnas al marco de datos (o bien usar algún paquete de R específico,
+pero no hace falta).
 
 ```{r}
 #| fig.width: 10

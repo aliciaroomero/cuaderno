@@ -1,10 +1,21 @@
 ---
-title: "Practica 5"
-author: "Alicia Romero Osuna"
-html:
-    embed-resources: true
-editor: visual
+title: "Búsquedas programáticas en la base de datos ENA"
+lang: es
+date: today
+execute: 
+  output: true
+  error: true
 engine: knitr
+bibliography: ../../doc/references.bib
+language:
+   title-block-published: "Última actualización:"
+   section-title-references: "Bibliografía"
+format:
+   html:
+      embed-resources: true
+editor: 
+  markdown: 
+    wrap: 72
 ---
 
 # PRÁCTICA 5
@@ -21,43 +32,86 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Introducción
 
-La base de datos ENA almacena diferentes tipos de secuencias nucleotídicas, y mucha información sobre cada uno de los *registros*. Desde la línea de comandos o desde un lenguaje de programación cualquiera podemos descargar tanto **metadatos**, mediante la API del *portal* de ENA; como **registros** (es decir, secuencias y la información que las acompaña), mediante la API del *navegador* (*browser*) de ENA.
+La base de datos ENA almacena diferentes tipos de secuencias
+nucleotídicas, y mucha información sobre cada uno de los *registros*.
+Desde la línea de comandos o desde un lenguaje de programación
+cualquiera podemos descargar tanto **metadatos**, mediante la API del
+*portal* de ENA; como **registros** (es decir, secuencias y la
+información que las acompaña), mediante la API del *navegador*
+(*browser*) de ENA.
 
-La API del *portal* de ENA es una sintaxis para la confección de direcciones URL, con las cuales consultamos metadatos de los registros en la base de datos.
+La API del *portal* de ENA es una sintaxis para la confección de
+direcciones URL, con las cuales consultamos metadatos de los registros
+en la base de datos.
 
-En el enlace siguiente encontrarás documentación sobre cómo realizar búsquedas avanzadas en ENA programáticamente usando esta API:
+En el enlace siguiente encontrarás documentación sobre cómo realizar
+búsquedas avanzadas en ENA programáticamente usando esta API:
 
 <https://ena-docs.readthedocs.io/en/latest/retrieval/programmatic-access/advanced-search.html>
 
-Puedes también descargar un manual completo y actualizado de la ENA Portal API en el enlace siguiente: <https://www.ebi.ac.uk/ena/portal/api/doc>.
+Puedes también descargar un manual completo y actualizado de la ENA
+Portal API en el enlace siguiente:
+<https://www.ebi.ac.uk/ena/portal/api/doc>.
 
-Tienes un ejemplo en la URL siguiente. Cópiala, pégala en la barra del navegador y accederás a una tabla que describe los registros de tipo *read run* (lecturas cortas) procedentes del estómago de vacas del Reino Unido:
+Tienes un ejemplo en la URL siguiente. Cópiala, pégala en la barra del
+navegador y accederás a una tabla que describe los registros de tipo
+*read run* (lecturas cortas) procedentes del estómago de vacas del Reino
+Unido:
 
 ```         
 https://www.ebi.ac.uk/ena/portal/api/search?result=read_run&query=country="United Kingdom" AND host_tax_id=9913 AND host_body_site="rumen"
 ```
 
-Para extraer directamente las secuencias y su información asociada, ENA nos ofrece otro portal, con una API muy parecida: el ENA Browser Portal, cuya documentación deberíamos poder descargar de aquí: <https://www.ebi.ac.uk/ena/browser/api/doc>.
+Para extraer directamente las secuencias y su información asociada, ENA
+nos ofrece otro portal, con una API muy parecida: el ENA Browser Portal,
+cuya documentación deberíamos poder descargar de aquí:
+<https://www.ebi.ac.uk/ena/browser/api/doc>.
 
-Como ejemplo, el enlace siguiente te permite descargar la secuencia del cromosoma mitocondrial de un neandertal.
+Como ejemplo, el enlace siguiente te permite descargar la secuencia del
+cromosoma mitocondrial de un neandertal.
 
 `https://www.ebi.ac.uk/ena/browser/api/fasta/KJ533544`
 
-Como ves, para poder descargar una secuencia (o más) necesitas conocer su número de acceso; KJ533544 en el ejemplo.
+Como ves, para poder descargar una secuencia (o más) necesitas conocer
+su número de acceso; KJ533544 en el ejemplo.
 
 ## La API del portal de ENA
 
-Cualquier consulta dirigida al portal de ENA tomará la forma de una URL con la estructura siguiente:
+Cualquier consulta dirigida al portal de ENA tomará la forma de una URL
+con la estructura siguiente:
 
 1.  La dirección del portal: `https://www.ebi.ac.uk/ena/portal/api`.
-2.  El **endpoint** `/search`, que especifica que realizamos una consulta o búsqueda. Existen otros *endpoints*.
-3.  Los parámetros de la búsqueda, que incluyen cinco campos separados por "&":
+2.  El **endpoint** `/search`, que especifica que realizamos una
+    consulta o búsqueda. Existen otros *endpoints*.
+3.  Los parámetros de la búsqueda, que incluyen cinco campos separados
+    por "&":
 
--   `/result=<tipo de datos>`, donde `<tipo de datos>` puede ser cualquiera de los *results* disponibles: *read_run*, *read_experiment*, *sample*, *study*, *sequence_release*, *sequence_update*, *wgs_set*, *tsa_set*, *assembly*, *coding_release*, *coding_update*, *noncoding_release*, *noncoding_update*, y *taxonomy*.
--   Opcionalmente, `query=<filtros>`, donde `<filtros>` debe sustituirse por una o más condiciones que deben cumplir los registros para ser presentados. Las diferentes condiciones o filtros irán separadas por "AND", "OR" o "NOT". Existen reglas sobre cómo especificar cada posible filtro para cada posible tipo de resultado. Estas reglas están especificadas en la documentación del portal: <https://www.ebi.ac.uk/ena/portal/api/doc>.
--   Opcionalmente, `fields=<campos>`, donde `<campos>` se debe sustituir por la lista, separada por comas, de los campos de información que deseamos extraer de cada registro. Es decir, las columnas que deseamos ver en la tabla de resultados. Cada tipo de `result` admite un conjunto de campos disponibles, que también están detallados en la documentación del portal.
--   Opcionalmente, `limit=<límite>` donde `<límite>` representa el número máximo de registros (líneas) que queremos extraer en la tabla de resultados. Por defecto, el límite es 100000. Para no limitar la búsqueda, hay que especificar `limit=0`.
--   Opcionalmente, `format=<formato>`, donde `<formato>` representa uno de dos valores posibles: `tsv` (*tab separated values*, usado por defecto) o `json`.
+-   `/result=<tipo de datos>`, donde `<tipo de datos>` puede ser
+    cualquiera de los *results* disponibles: *read_run*,
+    *read_experiment*, *sample*, *study*, *sequence_release*,
+    *sequence_update*, *wgs_set*, *tsa_set*, *assembly*,
+    *coding_release*, *coding_update*, *noncoding_release*,
+    *noncoding_update*, y *taxonomy*.
+-   Opcionalmente, `query=<filtros>`, donde `<filtros>` debe sustituirse
+    por una o más condiciones que deben cumplir los registros para ser
+    presentados. Las diferentes condiciones o filtros irán separadas por
+    "AND", "OR" o "NOT". Existen reglas sobre cómo especificar cada
+    posible filtro para cada posible tipo de resultado. Estas reglas
+    están especificadas en la documentación del portal:
+    <https://www.ebi.ac.uk/ena/portal/api/doc>.
+-   Opcionalmente, `fields=<campos>`, donde `<campos>` se debe sustituir
+    por la lista, separada por comas, de los campos de información que
+    deseamos extraer de cada registro. Es decir, las columnas que
+    deseamos ver en la tabla de resultados. Cada tipo de `result` admite
+    un conjunto de campos disponibles, que también están detallados en
+    la documentación del portal.
+-   Opcionalmente, `limit=<límite>` donde `<límite>` representa el
+    número máximo de registros (líneas) que queremos extraer en la tabla
+    de resultados. Por defecto, el límite es 100000. Para no limitar la
+    búsqueda, hay que especificar `limit=0`.
+-   Opcionalmente, `format=<formato>`, donde `<formato>` representa uno
+    de dos valores posibles: `tsv` (*tab separated values*, usado por
+    defecto) o `json`.
 
 ### Ejemplos
 
@@ -75,7 +129,10 @@ https://www.ebi.ac.uk/ena/portal/api/search?result=assembly&query=tax_tree(6157)
 
 ## Desde una sesión de R
 
-La función `read.table()` puede leer directamente de una página web. Pero si queremos descargar el resultado de una consulta programática en un archivo, podemos usar el paquete la función `curl_download()`, del paquete `curl`.
+La función `read.table()` puede leer directamente de una página web.
+Pero si queremos descargar el resultado de una consulta programática en
+un archivo, podemos usar el paquete la función `curl_download()`, del
+paquete `curl`.
 
 ```{r}
 library('curl')
@@ -83,9 +140,11 @@ library('curl')
 
 ### Ejercicio 1
 
-*Intenta ejecutar los bloques siguientes. Compáralos y explica qué problemas o dificultades identificas en cada uno.*
+*Intenta ejecutar los bloques siguientes. Compáralos y explica qué
+problemas o dificultades identificas en cada uno.*
 
-En este caso, al ejecutar el comando aparece el siguiente error: "URL using bad/illegal format or missing URL:
+En este caso, al ejecutar el comando aparece el siguiente error: "URL
+using bad/illegal format or missing URL:
 
 URL rejected: Malformed input to a URL function.
 
@@ -93,7 +152,9 @@ URL rejected: Malformed input to a URL function.
 |------------------------------------------------------------------------|
 | curl_download('<https://www.ebi.ac.uk/ena/portal/api/search?result=assembly&query=tax_tree(6157)> AND genome_representation="full"&fields=version,tax_id,scientific_name,last_updated,base_count&limit=0', destfile = 'z1.txt') |
 
-Este comando sí que se ha podido ejecutar correctamente. No ha aparecido ningún error. Ha descargado un primer archivo: una \# tabla con varias columnas.
+Este comando sí que se ha podido ejecutar correctamente. No ha aparecido
+ningún error. Ha descargado un primer archivo: una \# tabla con varias
+columnas.
 
 ```{r}
 curl_download(
@@ -101,7 +162,8 @@ curl_download(
   destfile = 'z1.txt')
 ```
 
-En este comando tampoco me aparece que existe ningún error. Descarga una tabla exactamente idéntica a la anterior.
+En este comando tampoco me aparece que existe ningún error. Descarga una
+tabla exactamente idéntica a la anterior.
 
 ```{r}
 portal <- 'https://www.ebi.ac.uk/ena/portal/api/search?'
@@ -113,15 +175,46 @@ URL <- paste0(portal, result, query, fields, limit)
 download.file(URLencode(URL), destfile = 'z2.txt', method = 'libcurl')
 ```
 
-**Comparación:** El único de estos bloques en los que ha aparecido algún error ha sido en el primero. La diferencia es el URL encode. Podemos copiar el URL encode del primero en la consola de R y ejecutarlo. A la función URL encode le hemos dado una cadena de caracteres muy larga, nos devuelve una cadena en la que ha traducido algunos de los carácteres: ha cambiado lo justo para que la URL funcione cuando se la damos a la función curl download. Si a la cadena de carácteres original la copiamos y la traemos a una páginia del ordenador, funciona. Los navegadores también pueden traducir estos espacios y comillas. Vemos que son una lista de ensamblajes genómicos, que pertenecen al taxón 6157 y es una representación full (ensamblaje completo). Vemos el identificador, nombre del taxon, número de bases... Para averiguar a que taxon pertenece el 6157 --\> https://www.ebi.ac.uk/ena/portal/api/search?result=taxon&query. Vemos que \# pertenece al taxon de los platelmintos.
+**Comparación:** El único de estos bloques en los que ha aparecido algún
+error ha sido en el primero. La diferencia es el URL encode. Podemos
+copiar el URL encode del primero en la consola de R y ejecutarlo. A la
+función URL encode le hemos dado una cadena de caracteres muy larga, nos
+devuelve una cadena en la que ha traducido algunos de los carácteres: ha
+cambiado lo justo para que la URL funcione cuando se la damos a la
+función curl download. Si a la cadena de carácteres original la copiamos
+y la traemos a una páginia del ordenador, funciona. Los navegadores
+también pueden traducir estos espacios y comillas. Vemos que son una
+lista de ensamblajes genómicos, que pertenecen al taxón 6157 y es una
+representación full (ensamblaje completo). Vemos el identificador,
+nombre del taxon, número de bases... Para averiguar a que taxon
+pertenece el 6157 --\>
+https://www.ebi.ac.uk/ena/portal/api/search?result=taxon&query. Vemos
+que \# pertenece al taxon de los platelmintos.
 
-El segundo bloque son un par de líneas, mientras que el tercer son siete ordenes y hemos creado unas cuantas variables, destacan las siguientes: Portal, para la información de la variable. Result, tipo de resultado. Fields, campos de información. Limites, si es igual a cero para que nos dé todos los resultados aunque sean más de 10.000. Con curl_download es descargar eso pero con la traducción que necesite. Su desventaja es que hay que escribir más, pero su ventaja es que es más visual y aunque tenga más lineas, son más cortas y caben todas en el documento. Es fácil identificar qué estamos buscando o qué queremos que nos muestre.
+El segundo bloque son un par de líneas, mientras que el tercer son siete
+ordenes y hemos creado unas cuantas variables, destacan las siguientes:
+Portal, para la información de la variable. Result, tipo de resultado.
+Fields, campos de información. Limites, si es igual a cero para que nos
+dé todos los resultados aunque sean más de 10.000. Con curl_download es
+descargar eso pero con la traducción que necesite. Su desventaja es que
+hay que escribir más, pero su ventaja es que es más visual y aunque
+tenga más lineas, son más cortas y caben todas en el documento. Es fácil
+identificar qué estamos buscando o qué queremos que nos muestre.
 
 ### Ejercicio 2
 
-*Confecciona una URL para descargar una tabla de las secuencias codificantes de alcohol deshidrogenasas del género Drosophila, que te permita contestar las preguntas siguientes. Consulta el apéndice de este guión, si lo necesitas.*
+*Confecciona una URL para descargar una tabla de las secuencias
+codificantes de alcohol deshidrogenasas del género Drosophila, que te
+permita contestar las preguntas siguientes. Consulta el apéndice de este
+guión, si lo necesitas.*
 
-La URL que he confeccionado se muestra a continuación. No sería necesaria incorporar la definición de portal y limit porque ya las hemos definido antes, pero yo las dejo aquí. El resultado si que lo tenemos que actualizar, ahora buscamos secuencias codificantes. Coding debe ir seguido de &. Lo podemos ir ejecutando línea por línea. Primero hemos probado en results con "coding" pero para este enzima no había ningún resultado. He vuelto a probar, pero con sequence.
+La URL que he confeccionado se muestra a continuación. No sería
+necesaria incorporar la definición de portal y limit porque ya las hemos
+definido antes, pero yo las dejo aquí. El resultado si que lo tenemos
+que actualizar, ahora buscamos secuencias codificantes. Coding debe ir
+seguido de &. Lo podemos ir ejecutando línea por línea. Primero hemos
+probado en results con "coding" pero para este enzima no había ningún
+resultado. He vuelto a probar, pero con sequence.
 
 ```{r}
 portal2 <- 'https://www.ebi.ac.uk/ena/portal/api/search?'
@@ -133,9 +226,19 @@ URL2 <- paste0(portal2, result2, query2, fields2, limit2)
 curl_download(URLencode(URL2 ), destfile = 'z3.txt')
 ```
 
-1.  *¿Cuántas secuencias hay con el término "alcohol dehydrogenase" en su descripción?*
+1.  *¿Cuántas secuencias hay con el término "alcohol dehydrogenase" en
+    su descripción?*
 
-Abrimos la tabla en la sección de R, vemos la tabla usando read.table(). Puede que en alguna descripción haya algún apostrofe, y R puede tomarlo como que se abren comillas y hasta que no hubiera otra no se cerraría. Para evitar esto ponemos quote="", para decir que no estamos usando ningún carácter para abrir y cerrar comillas. Le tenemos que decir a read.table si hay cabeceras, si que hay nombres en las columnas. Si no le decimos que hay nombres puede complicarse, lo hacemos con header=TRUE.Debemos decir cuál es el delimitador de columnas lo hacemos con sep="\t". Podemos ver las primeras columnas con la función head(adh) adh \<- read.table('z3.txt', quote="", header=TRUE, sep="\t") head(adh)
+Abrimos la tabla en la sección de R, vemos la tabla usando read.table().
+Puede que en alguna descripción haya algún apostrofe, y R puede tomarlo
+como que se abren comillas y hasta que no hubiera otra no se cerraría.
+Para evitar esto ponemos quote="", para decir que no estamos usando
+ningún carácter para abrir y cerrar comillas. Le tenemos que decir a
+read.table si hay cabeceras, si que hay nombres en las columnas. Si no
+le decimos que hay nombres puede complicarse, lo hacemos con
+header=TRUE.Debemos decir cuál es el delimitador de columnas lo hacemos
+con sep="\t". Podemos ver las primeras columnas con la función head(adh)
+adh \<- read.table('z3.txt', quote="", header=TRUE, sep="\t") head(adh)
 
 ```{r}
 adh <- read.table('z3.txt', quote="", header=TRUE, sep="\t")
@@ -150,7 +253,8 @@ dim(adh)
 
 2.  *¿Qué longitudes tienen?*
 
-    El siguiente código nos dirá el valor mínimo, primer cuartil, mediana, media, tercer cuartil y valor máximo:
+    El siguiente código nos dirá el valor mínimo, primer cuartil,
+    mediana, media, tercer cuartil y valor máximo:
 
 ```{r}
 summary(adh$base_count)
@@ -158,7 +262,8 @@ summary(adh$base_count)
 
 3.  *¿De cuántas especies diferentes son estas secuencias?*
 
-    Le he puesto "length" delante para saber el número. Pero para ver las especies podría poner este código sin "lenght".
+    Le he puesto "length" delante para saber el número. Pero para ver
+    las especies podría poner este código sin "lenght".
 
 ```{r}
 length(unique(adh$scientific_name))
@@ -166,7 +271,8 @@ length(unique(adh$scientific_name))
 
 4.  *¿Cuándo se publicaron las más recientes?*
 
-    Para conocer las más recientes, que serán las últimas de la tabla, usamos tail. Es decir, si usaramos head veríamos las más antiguas.
+    Para conocer las más recientes, que serán las últimas de la tabla,
+    usamos tail. Es decir, si usaramos head veríamos las más antiguas.
 
 ```{r}
 tail(sort(adh$first_public))
@@ -174,7 +280,12 @@ tail(sort(adh$first_public))
 
 ## Trabajar con los resultados
 
-La función `read.table()` de R nos permite leer un archivo (o una URL) para crear una tabla. Necesita que todas las filas tengan el mismo número de campos o columnas, delimitadas por el carácter especificado con la opción `sep = "\t"`. Esta función nos permite también especificar el tipo de datos de cada columna. Podemos usar como ejemplo los genomas de platelmintos del ejercicio 1:
+La función `read.table()` de R nos permite leer un archivo (o una URL)
+para crear una tabla. Necesita que todas las filas tengan el mismo
+número de campos o columnas, delimitadas por el carácter especificado
+con la opción `sep = "\t"`. Esta función nos permite también especificar
+el tipo de datos de cada columna. Podemos usar como ejemplo los genomas
+de platelmintos del ejercicio 1:
 
 ```{r}
 # Si no has ejecutado el tercer bloque del ejercicio 1,
@@ -186,7 +297,14 @@ platelmintos <- read.table(URLencode(URL),
     na.strings = '')
 ```
 
-El código siguiente crea una nueva columna en la tabla con el género al que pertenece cada secuencia. Se toma como género la primera palabra del nombre científico. Para ello, debemos separar las partes de cada nombre delimitadas por un espacio en blanco, con la función `strsplit()`. Y por último usamos la función `sapply()` para aplicar a cada nombre científico la función de selección de componentes, `[`, y la opción "1", para seleccionar sólo el primero de los componentes en que habíamos dividido cada nombre científico.
+El código siguiente crea una nueva columna en la tabla con el género al
+que pertenece cada secuencia. Se toma como género la primera palabra del
+nombre científico. Para ello, debemos separar las partes de cada nombre
+delimitadas por un espacio en blanco, con la función `strsplit()`. Y por
+último usamos la función `sapply()` para aplicar a cada nombre
+científico la función de selección de componentes, `[`, y la opción "1",
+para seleccionar sólo el primero de los componentes en que habíamos
+dividido cada nombre científico.
 
 ```{r}
 platelmintos$genus <- sapply(
@@ -195,7 +313,8 @@ platelmintos$genus <- sapply(
    1)
 ```
 
-Una vez clasificadas por género, podemos visualizar el número de bases de cada secuencia agrupadas por género.
+Una vez clasificadas por género, podemos visualizar el número de bases
+de cada secuencia agrupadas por género.
 
 ```{r}
 #| fig.width: 10
@@ -208,9 +327,16 @@ mtext('Base count', side = 2, line = 5)
 
 ### Ejercicio 3
 
-*¿De qué manera necesitarías transformar la tabla `platelmintos` para poder representar gráficamente la longitud acumulada de todas las secuencias disponibles a medida que se han ido publicando?*
+*¿De qué manera necesitarías transformar la tabla `platelmintos` para
+poder representar gráficamente la longitud acumulada de todas las
+secuencias disponibles a medida que se han ido publicando?*
 
-En primer lugar se ordenarían los datos por orden de publicación y, a continuación, se crearía una columna que contenga la longitud acumulada de las secuencias disponibles. Para hacerlo de forma gráfica he ajustado el código anterior. Nota: Previamente, he consultado mediante names(platelmintos) cómo se llama la columna que hace referencia a la fecha.
+En primer lugar se ordenarían los datos por orden de publicación y, a
+continuación, se crearía una columna que contenga la longitud acumulada
+de las secuencias disponibles. Para hacerlo de forma gráfica he ajustado
+el código anterior. Nota: Previamente, he consultado mediante
+names(platelmintos) cómo se llama la columna que hace referencia a la
+fecha.
 
 ```{r}
 platelmintos2 <- platelmintos[order(platelmintos$last_updated), ]
@@ -227,7 +353,9 @@ mtext('Base count', side = 2, line = 5)
 
 ## La API del navegador (*browser*) de ENA
 
-Entre las secuencias obtenidas en el ejercicio 2, encontrarás las siguientes: AAC39011, AAY25307, ABU44510, ABG56046 y AAO06902. Vamos a descargarlas en formato fasta:
+Entre las secuencias obtenidas en el ejercicio 2, encontrarás las
+siguientes: AAC39011, AAY25307, ABU44510, ABG56046 y AAO06902. Vamos a
+descargarlas en formato fasta:
 
 ```{r}
 portal    <- 'https://www.ebi.ac.uk/ena/browser/api/'
