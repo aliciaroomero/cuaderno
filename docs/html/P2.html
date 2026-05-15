@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Alicia Romero Osuna">
 
-<title>Website – Cuaderno de Bioinformática</title>
+<title>Práctica 2</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,224 +24,41 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8d45268d5fab650d045fc15ac05c5fa4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
-  "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
-  }
-}</script>
+<script src="Practica2 guion_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Practica2 guion_files/libs/quarto-html/quarto.js"></script>
+<script src="Practica2 guion_files/libs/quarto-html/popper.min.js"></script>
+<script src="Practica2 guion_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Practica2 guion_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Practica2 guion_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Practica2 guion_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Practica2 guion_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Practica2 guion_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Practica2 guion_files/libs/bootstrap/bootstrap-af9f9d18d8d307a2cf9ee553099620e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
-<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="fullcontent">
 
-<div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Cuaderno de Bioinformática</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
-<span class="menu-text">Inicio</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
-<span class="menu-text">Acerca de mí…</span></a>
-  </li>  
-</ul>
-          </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
-</div>
-      </div> <!-- /container-fluid -->
-    </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Website</li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
-    </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
-<!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Prácticas</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 1: Nociones de Bash y alineamientos básicos</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 2: Control de versiones con Git</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 3: Mapeo de secuencias cortas</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 4: Tablas en R o marcos de datos con R</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 5: Búsquedas programáticas en la base de datos ENA</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 6: Búsquedas programáticas en Interpro</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 7: Visualización y exploración de datos</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 8: BLAST</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P9.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 9: Reconstrucción filogenética</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P10.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 10: Ensamblaje de genomas</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 11: Anotación</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P12.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 12: Análisis de la expresión diferencial</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#contenido-de-la-página-principal" id="toc-contenido-de-la-página-principal" class="nav-link active" data-scroll-target="#contenido-de-la-página-principal">Contenido de la página principal</a>
-  <ul class="collapse">
-  <li><a href="#qué-se-ha-trabajado-durante-las-prácticas" id="toc-qué-se-ha-trabajado-durante-las-prácticas" class="nav-link" data-scroll-target="#qué-se-ha-trabajado-durante-las-prácticas">¿Qué se ha trabajado durante las prácticas?</a></li>
-  <li><a href="#en-qué-entorno-se-ha-trabajado-durante-las-prácticas" id="toc-en-qué-entorno-se-ha-trabajado-durante-las-prácticas" class="nav-link" data-scroll-target="#en-qué-entorno-se-ha-trabajado-durante-las-prácticas">¿En qué entorno se ha trabajado durante las prácticas?</a></li>
-  <li><a href="#qué-he-aprendido" id="toc-qué-he-aprendido" class="nav-link" data-scroll-target="#qué-he-aprendido">¿Qué he aprendido?</a></li>
-  </ul></li>
-  </ul>
-</nav>
-    </div>
-<!-- main -->
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Website</h1>
+<h1 class="title">Práctica 2</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Alicia Romero Osuna </p>
+          </div>
+  </div>
     
   
     
@@ -251,35 +69,91 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="contenido-de-la-página-principal" class="level1">
-<h1>Contenido de la página principal</h1>
-<p>En esta página web se aprecian las prácticas realizadas durante las sesiones de <strong>Bioinformática</strong>. Todo el contenido acerca de estas se encuentra tanto en esta página web como en mi repositorio “cuaderno” de <a href="https://github.com/aliciaroomero/cuaderno.git"><strong>GitHub</strong></a>.</p>
-<ul>
-<li><p>Los guiones se han subido en versión html (renderizados) para facilitar su visualización.</p></li>
-<li><p>Todas las prácticas (excepto un par de ejercicios) están acabadas y revisadas. Cabe destacar que el contenido de mi cuaderno ha sido completado <u>gracias a la ayuda de mis compañeras</u>. Ellas han colaborado con algunos ejercicios que me faltaban o me han ayudado a corregir algunos errores de mis guiones, mientras que yo he realizado lo mismo con sus repositorios. El objetivo de nuestra colaboración ha sido completar los contenidos de nuestros cuadernos.</p></li>
-</ul>
-<section id="qué-se-ha-trabajado-durante-las-prácticas" class="level2">
-<h2 class="anchored" data-anchor-id="qué-se-ha-trabajado-durante-las-prácticas">¿Qué se ha trabajado durante las prácticas?</h2>
-<p>Los contenidos que se han trabajado durante las prácticas son los mismos que los explicados en clase, sin embargo, estos han sido llevados a la práctica (valga la redundancia) en clase de informática. De esta forma, las sesiones prácticas desarrolladas durante el curso han servido para consolidar los conocimientos adquiridos en las clases teóricas de la asignatura.</p>
+<section id="práctica-2" class="level1">
+<h1>PRÁCTICA 2</h1>
+<p><strong>Nota1:</strong> Esta práctica se realizó durante la sesión 2, no obstante se ha elaborado el guion posteriormente. Este guion es una adaptación del guion que se encuentra en el Aula Virtual.</p>
+<p><strong>Nota2:</strong> En el día en el que se realizó esta sesión se subió un archivo de texto con todos los comandos realizados durante la práctica.</p>
+<section id="objetivos" class="level2">
+<h2 class="anchored" data-anchor-id="objetivos">Objetivos</h2>
+<ol type="1">
+<li><p>Configurar Git e inicializar el repositorio.</p></li>
+<li><p>Ejecutar al menos un par de commits.</p></li>
+<li><p>Crear el archivo oculto .gitignore</p></li>
+<li><p>Crear un repositorio remoto en Github.</p></li>
+</ol>
 </section>
-<section id="en-qué-entorno-se-ha-trabajado-durante-las-prácticas" class="level2">
-<h2 class="anchored" data-anchor-id="en-qué-entorno-se-ha-trabajado-durante-las-prácticas">¿En qué entorno se ha trabajado durante las prácticas?</h2>
-<p>Durante el desarrollo de estas prácticas he utilizado las siguientes <strong>herramientas</strong>:</p>
-<ul>
-<li><p><strong>Bash</strong></p></li>
-<li><p><strong>RStudio</strong></p></li>
-<li><p><strong>GitHub</strong></p></li>
-</ul>
+<section id="configuración" class="level2">
+<h2 class="anchored" data-anchor-id="configuración">Configuración</h2>
+<p>En el terminal de Bash debemos escribirr lo siguiente:</p>
+<p>git config –global user.name “Nombre y apellidos” git config –global user.email “…@alumni.uv.es”</p>
+<p>Es importante utilizar el mismo correo electrónico al crear una cuenta en GitHub.</p>
+<p>Se configura nano como editor de texto usado para escribir los mensajes con los que etiquetamos las instantáneas o los commits.</p>
+<p>git config –global core.editor “nano -w”</p>
+<p>Git usa el término “rama” (branch) para referirse a una cadena lineal de commits. A la rama principal, con la que se inicia un repositorio la llama master, aunque nosotros le llamaremos “soca” (cepa en valenciano).</p>
+<p>git config –global init.defaultBranch soca</p>
+<p>Puedes ver la configuración actual con git config –list.</p>
 </section>
-<section id="qué-he-aprendido" class="level2">
-<h2 class="anchored" data-anchor-id="qué-he-aprendido">¿Qué he aprendido?</h2>
-<p>Además de los contenidos teóricos, he aprendido a llevarlos a la práctica utilizando las herramientas previamente mencionadas. Me gustaría destacar que a lo largo del curso he adquirido mayor soltura con ellas. Incluso he aprendido a desarrollar una página web utilizando R studio.</p>
+<section id="creación-del-repositorio" class="level2">
+<h2 class="anchored" data-anchor-id="creación-del-repositorio">Creación del repositorio</h2>
+<p>Desde la carpeta principal, en el terminal ejecutamos <em>git init</em>. Tras esto, se habrá creado una carpeta oculta, .git. A partir de ese momento, Git observará las modificaciones de todos los archivos en esa carpeta y en todas sus subcarpetas.</p>
+<p><u>¡OJO! Es importante no crear repositorios en subcarpetas de un repositorio previo.</u></p>
+<p>Una vez creado el repositorio, se usa el comando git status, para comprobar el estado de tus archivos.</p>
+</section>
+<section id="seguimiento-de-modificaciones" class="level2">
+<h2 class="anchored" data-anchor-id="seguimiento-de-modificaciones">Seguimiento de modificaciones</h2>
+<p>Utiliza <em>git add …</em> para añadir archivos al área de preparación o “escenario”. Consulta git status y cuando los hayas añadido todos, ejecuta `git commit -m “…”, donde debes sustituir los “…” por un mensaje entrecomillado que describa los cambios introducidos en la carpeta.</p>
+</section>
+<section id="ignorar-cosas" class="level2">
+<h2 class="anchored" data-anchor-id="ignorar-cosas">Ignorar cosas</h2>
+<p>Git está diseñado para compartir archivos pequeños que van cambiando a lo largo de un proyecto. No es un sistema de copias de seguridad. La carpeta de datos debería ser excluida del seguimiento ofrecido por Git. El motivo es que allí pueden residir archivos muy grandes que además no deberían modificarse nunca. Además, en cualquier carpeta de resultados puede haber archivos de los que no queremos que Git observe: si son de más de 10 Mb, o si son archivos temporales sin importancia, por ejemplo.</p>
+<p>Para ignorar ciertos archivos, podemos crear el archivo .gitignore, directamente en la carpeta de trabajo. Es un archivo de texto, y su contenido es una lista de archivos a ignorar.</p>
+<p>Por ejemplo:</p>
+<pre><code>.gitignore
+data/ 
+*.bam</code></pre>
+<p>Estas tres líneas indican:</p>
+<ol type="1">
+<li><p>Ignora el archivo <code>.gitignore</code> (en general, recomendable).</p></li>
+<li><p>Ignora el contenido de la carpeta local <code>data</code>.</p></li>
+<li><p>Ignora todos los archivos que terminen en <code>.bam</code>. Observa el uso del asterisco, “*“, como comodín: representa cualquier cadena de caracteres.</p></li>
+</ol>
+</section>
+<section id="crear-un-repositorio-en-github" class="level2">
+<h2 class="anchored" data-anchor-id="crear-un-repositorio-en-github">Crear un repositorio en Github</h2>
+<p>Para ello primero nos hemos tenido que haber creado una cuenta de usuario. Para la creación de un nuevo repositorio es recomendable darle el mismo nombre que tiene la carpeta en la que has creado tu repositorio local.</p>
+<p>Github te da la opción de añadir un archivo README.md, un archivo .gitignore y una licencia.</p>
+<p>Hemos creado una licencia en un archivo LICENSE.txt, que posteriormente se ha añadido al repositorio de GitHub.</p>
+</section>
+<section id="crear-un-par-de-llaves-ssh" class="level2">
+<h2 class="anchored" data-anchor-id="crear-un-par-de-llaves-ssh">Crear un par de llaves SSH</h2>
+<p>Para identificarnos cada vez que actualizamos el repositorio remoto, son necesarias un par de llaves SSH. Las llaves son documentos de texto.</p>
+<p>Una llave es pública y actúa más bien como un cerrojo. La otra llave es privada: queda guardada en una carpeta oculta .ssh/, en el dirctorio de usuario de tu ordenador, sin permiso de lectura más que para la persona propietaria. La llave privada debe estar protegida por contraseña o passphrase (una frase es más fácil de recordar que una contraseña y más difícil de adivinar, aunque más larga de teclear). Para crear un par de llaves, ejecuta el código siguiente en el terminal (desde cualquier carpeta), usando tu dirección de correo electrónico de la Universidad:</p>
+<p>ssh-keygen -t ed25519 -C “usuaria@alumni.uv.es”</p>
+<p>Acepta la ubicación propuesta por defecto donde guardar las llaves pulsando Enter cuando te pregunte. A continuación, introduce la contraseña o passphrase que quieras y no la olvides.</p>
+<p>Posteriormente, en el directorio de usuario habrá aparecido una carpeta .ssh/ con dos archivos: ed25519 y ed25519.pub. Éste último es la llave pública. Puedes visualizarla en el terminal, por ejemplo con la orden cat ~/.ssh/ed25519.pub. Copia en el portapapele la llave (desde “ssh-…” hasta “…(alumni.uv.es?)”). A continuación, accede a tu perfil de Github. Pincha sobre el icono en la esquina superior derecha y entra en el apartado “Settings” del menú. Busca la sección “SSH and GPG keys”, y pulsa en “New SSH key”. Nombra la llave de manera que te recuerde el ordenador donde se encuentra la llave privada (por ejemplo, “portatil”) y pega la llave pública en el recuadro destinado a ello. Por último, confirma la acción pulsando el botón verde.</p>
+</section>
+<section id="vincular-el-repositorio-local-al-remoto" class="level2">
+<h2 class="anchored" data-anchor-id="vincular-el-repositorio-local-al-remoto">Vincular el repositorio local al remoto</h2>
+<p>En la página de Github donde reside tu repositorio, encontrarás un botón verde con la inscripción &lt;&gt; Code. Al pincharlo, la pestaña izquierda (“Local”) te sugiere que puedes “clonar” el repositorio y te ofrece tres opciones, una de las cuales es “SSH”. No vamos a clonarlo, porque la versión local ya tiene más información que la remota. Pero igualmente copia la dirección SSH que está allí indicada (git@github.com:usuario/repositorio) y vuelve al terminal.</p>
+<p>Desde el terminal, estando en la carpeta de trabajo, puedes vincular tu repositorio local al remoto mediante una orden como esta:</p>
+<p>git remote add origin git@github.com:usuario/repositorio</p>
+<p>pero usando la dirección SSH de tu repositorio, que has copiado antes. La palabra “origin” identificará el remoto en tu repositorio local. Podrías haberle dado cualquier otro nombre. Pero “origin” es un estándar muy aceptado. A continuación, puedes enviar tu trabajo al repositorio remoto mediante esta orden:</p>
+<p>git push -u origin soca</p>
+<p>Con eso le estarías diciendo a Git que envíe el estado actual de tu rama local a la rama “soca” del remoto “origin”, y que además establezca esa rama remota como asociada por defecto a tu rama local. Puedes darle otro nombre a la rama remota, si lo prefieres.</p>
+<p>El hecho es que Git te permite tener varias ramas (versiones) de tu carpeta de trabajo. Y también varios remotos. Una vez que una rama remota está designada como “aguas-arriba” de una rama local, enviar actualizaciones al remoto es más fácil:</p>
+<p>git push</p>
+<p>Ya no hace falta especificar a qué rama remota estamos enviando las actualizaciones. Desde luego, no es recomendable trabajar con más de un remoto ni más de una rama si no es estrictamente necesario.</p>
+</section>
+<section id="traer-actualizaciones-del-remoto-a-la-carpeta-local" class="level2">
+<h2 class="anchored" data-anchor-id="traer-actualizaciones-del-remoto-a-la-carpeta-local">Traer actualizaciones del remoto a la carpeta local</h2>
+<p>Una vez la rama local está configurada para prestar atención a los cambios que pueden haber aparecido en una rama remota, al ejecutar git pull, automáticamente Git intentará implementar en la carpeta local cualquier modificación que se haya producido en la rama remota.</p>
+<p>El comando git pull es una combinación de git fetch y git merge, que significan: “echa un vistazo al estado de la rama remota” y “fusiona la rama remota con la local”, respectivamente. Después de git fetch, puede comprobar si ha habido cambios en el remoto con git status.</p>
+<p>Cada vez que git se comunique con el remoto en Github, tu ordenador te pedirá la contraseña con la que has protegido la llave privada.</p>
+</section>
+</section>
 
-
-</section>
-</section>
-
-</main> <!-- /main -->
+</main>
+<!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

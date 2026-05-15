@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="author" content="Alicia Romero Osuna">
 
-<title>Website – Cuaderno de Bioinformática</title>
+<title>Práctica 11</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,227 +21,78 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-8d45268d5fab650d045fc15ac05c5fa4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<script id="quarto-search-options" type="application/json">{
-  "location": "navbar",
-  "copy-button": false,
-  "collapse-after": 3,
-  "panel-placement": "end",
-  "type": "overlay",
-  "limit": 50,
-  "keyboard-shortcut": [
-    "f",
-    "/",
-    "s"
-  ],
-  "show-item-context": false,
-  "language": {
-    "search-no-results-text": "No results",
-    "search-matching-documents-text": "matching documents",
-    "search-copy-link-title": "Copy link to search",
-    "search-hide-matches-text": "Hide additional matches",
-    "search-more-match-text": "more match in this document",
-    "search-more-matches-text": "more matches in this document",
-    "search-clear-button-title": "Clear",
-    "search-text-placeholder": "",
-    "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
-  }
-}</script>
+<script src="Práctica 11_files/libs/clipboard/clipboard.min.js"></script>
+<script src="Práctica 11_files/libs/quarto-html/quarto.js"></script>
+<script src="Práctica 11_files/libs/quarto-html/popper.min.js"></script>
+<script src="Práctica 11_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="Práctica 11_files/libs/quarto-html/anchor.min.js"></script>
+<link href="Práctica 11_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="Práctica 11_files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="Práctica 11_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="Práctica 11_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="Práctica 11_files/libs/bootstrap/bootstrap-af9f9d18d8d307a2cf9ee553099620e3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
-<link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-sidebar docked nav-fixed">
+<body class="fullcontent">
 
-<div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
-      <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Cuaderno de Bioinformática</span>
-    </a>
-  </div>
-            <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-  <span class="navbar-toggler-icon"></span>
-</button>
-          <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page"> 
-<span class="menu-text">Inicio</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./about.html"> 
-<span class="menu-text">Acerca de mí…</span></a>
-  </li>  
-</ul>
-          </div> <!-- /navcollapse -->
-            <div class="quarto-navbar-tools">
-</div>
-      </div> <!-- /container-fluid -->
-    </nav>
-  <nav class="quarto-secondary-nav">
-    <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
-        <i class="bi bi-layout-text-sidebar-reverse"></i>
-      </button>
-        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Website</li></ol></nav>
-        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-        </a>
-      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
-        <i class="bi bi-search"></i>
-      </button>
-    </div>
-  </nav>
-</header>
-<!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
-<!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation docked overflow-auto">
-        <div class="mt-2 flex-shrink-0 align-items-center">
-        <div class="sidebar-search">
-        <div id="quarto-search" class="" title="Search"></div>
-        </div>
-        </div>
-    <div class="sidebar-menu-container"> 
-    <ul class="list-unstyled mt-1">
-        <li class="sidebar-item sidebar-item-section">
-      <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
- <span class="menu-text">Prácticas</span></a>
-          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Toggle section">
-            <i class="bi bi-chevron-right ms-2"></i>
-          </a> 
-      </div>
-      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P1.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 1: Nociones de Bash y alineamientos básicos</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P2.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 2: Control de versiones con Git</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P3.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 3: Mapeo de secuencias cortas</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P4.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 4: Tablas en R o marcos de datos con R</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P5.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 5: Búsquedas programáticas en la base de datos ENA</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P6.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 6: Búsquedas programáticas en Interpro</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P7.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 7: Visualización y exploración de datos</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P8.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 8: BLAST</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P9.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 9: Reconstrucción filogenética</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P10.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 10: Ensamblaje de genomas</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P11.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 11: Anotación</span></a>
-  </div>
-</li>
-          <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="./html/P12.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text">Práctica 12: Análisis de la expresión diferencial</span></a>
-  </div>
-</li>
-      </ul>
-  </li>
-    </ul>
-    </div>
-</nav>
-<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#contenido-de-la-página-principal" id="toc-contenido-de-la-página-principal" class="nav-link active" data-scroll-target="#contenido-de-la-página-principal">Contenido de la página principal</a>
-  <ul class="collapse">
-  <li><a href="#qué-se-ha-trabajado-durante-las-prácticas" id="toc-qué-se-ha-trabajado-durante-las-prácticas" class="nav-link" data-scroll-target="#qué-se-ha-trabajado-durante-las-prácticas">¿Qué se ha trabajado durante las prácticas?</a></li>
-  <li><a href="#en-qué-entorno-se-ha-trabajado-durante-las-prácticas" id="toc-en-qué-entorno-se-ha-trabajado-durante-las-prácticas" class="nav-link" data-scroll-target="#en-qué-entorno-se-ha-trabajado-durante-las-prácticas">¿En qué entorno se ha trabajado durante las prácticas?</a></li>
-  <li><a href="#qué-he-aprendido" id="toc-qué-he-aprendido" class="nav-link" data-scroll-target="#qué-he-aprendido">¿Qué he aprendido?</a></li>
-  </ul></li>
-  </ul>
-</nav>
-    </div>
-<!-- main -->
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Website</h1>
+<h1 class="title">Práctica 11</h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Alicia Romero Osuna </p>
+          </div>
+  </div>
     
   
     
@@ -251,35 +103,106 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="contenido-de-la-página-principal" class="level1">
-<h1>Contenido de la página principal</h1>
-<p>En esta página web se aprecian las prácticas realizadas durante las sesiones de <strong>Bioinformática</strong>. Todo el contenido acerca de estas se encuentra tanto en esta página web como en mi repositorio “cuaderno” de <a href="https://github.com/aliciaroomero/cuaderno.git"><strong>GitHub</strong></a>.</p>
+<section id="práctica-11" class="level1">
+<h1>PRÁCTICA 11</h1>
+<p>En esta práctica trabajaremos con los resultados de la anotación estructural realizada sobre el ensamblaje de la práctica anterior.</p>
+<section id="datos" class="level2">
+<h2 class="anchored" data-anchor-id="datos">Datos</h2>
+<p>Las evidencias que usaremos para encontrar los genes són secuencias de proteínas que esperamos encontrar codificadas en los cóntigos. Normalmente usaríamos las proteínas conocidas de alguna especie próxima. Usaremos las 6023 proteínas que sabemos que codifica el cromosoma 4 de Arabidopsis thalina. Las descargamos en Uniprot. Debido a que los programas GALBA, RepeatModeler y RepeatMaker son dificiles de instalar, hemos descargado los archivos que corresponderían a los resultados desde el aula virtual. Están situados en la carpeta results/2026-04-28.</p>
+</section>
+<section id="resultados" class="level2">
+<h2 class="anchored" data-anchor-id="resultados">Resultados</h2>
+</section>
+<section id="modificación-de-los-nombres-de-las-proteínas" class="level2">
+<h2 class="anchored" data-anchor-id="modificación-de-los-nombres-de-las-proteínas">1) Modificación de los nombres de las proteínas</h2>
+<p>Al descargar las proteínas del cromosoma 4 de A. thaliana, el archivo FASTA contiene cabeceras demasiado extensas. Para facilitar el trabajo de GALBA vamos a modificar las cabeceras o nombres de las secuencias.</p>
+<section id="ejercicio-1" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-1">Ejercicio 1</h3>
+<p>Sabiendo que una forma de hacerlo es la siguiente, incluye la orden en un bloque de Bash de tu documento de Quarto de tal manera que el archivo de entrada esté en tu carpeta data y el de salida en la misma carpeta de trabajo de la práctica actual, y además, que sólo se ejecute si el archivo de salida proteinas.fasta no existe. El archivo de entrada está en la carpeta “data” y tiene el siguiente nombre: uniprotkb_proteome_UP000006548_AND_prot_2026_04_28.fasta</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-f</span> proteinas.fasta <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">awk</span> <span class="st">'(/^&gt;/){split($1, A, /\|/); print "&gt;" A[2]}(/^[^&gt;]/){print $0}'</span> ../../data/uniprotkb_proteome_UP000006548_AND_prot_2026_04_28.fasta <span class="op">&gt;</span> proteinas.fasta</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Cambiamos los nombres de las proteínas para facilitar el procesamiento posterior y también el funcionamiento de GALBA, como se ha mencionado anteriormente.</p>
+</section>
+</section>
+<section id="análisis-de-los-resultados-de-repeatmodeler" class="level2">
+<h2 class="anchored" data-anchor-id="análisis-de-los-resultados-de-repeatmodeler">2) Análisis de los resultados de RepeatModeler</h2>
+<section id="ejercicio-2" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-2">Ejercicio 2</h3>
+<p><em>Explora los resultados de RepeatModeler y trata de contestar las preguntas siguientes.</em></p>
+<p>Entre los archivos descargados tenemos los archivos .log, que contienen la información del proceso (está tanto en la carpeta interior como exterior). Tenemos archivos .stk que son programas de alineamiento relativamente antiguos, alinea secuencias repetitivas. El archivo AT4.families.fa y el FASTA es las secuencias consenso de los elementos repetitivos. En las cabeceras nos dice en qué ronda lo ha encontrado (RepeatModeler utiliza un proceso iterativo). También nos dice el tamaño de la familia, es decir cuántos ejemplares de esta familia ha encontrado.</p>
+<p><em>A) ¿Cuántas familias de elementos transponibles se han encontrado?</em></p>
+<p>Existen 24 elementos transponibles (secuencias consenso). Podemos usar el paquete de R BioStrings para leerlo. Aunque desde el terminal podemos usar:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">'^&gt;'</span> RepeatModelerResults/At4-families.fa <span class="kw">|</span> <span class="fu">wc</span> <span class="at">-l</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>24</code></pre>
+</div>
+</div>
+<p><em>B) ¿Cuánto duró la ejecución del programa?</em></p>
+<p>1h, 2 minutos y 16 segundos. Lo tenemos en At4.log. Si queremos que quede constancia de este podemos poner:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="st">"Program Time"</span> RepeatModelerResults/At4-rmod.log</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Program Time: 01:02:16 (hh:mm:ss) Elapsed Time</code></pre>
+</div>
+</div>
+<p><em>C) ¿Cuál dirías que es el archivo de salida más importante?</em></p>
+<p>El archivo de salida más importante es consensi.fa. Este archivo contiene las secuencias consenso de todas las familia de elementos transponibles (tal y como puede intuirse por su nombre).</p>
+</section>
+</section>
+<section id="suavizar-la-máscara" class="level2">
+<h2 class="anchored" data-anchor-id="suavizar-la-máscara">3) Suavizar la máscara</h2>
+<p>La versión enmascarada tiene una máscara dura (RepeatMasker ha sustituído todos los elementos trasponibles y repeticiones por Ns), con lo que se ha perdido la información de la secuencia original en esas regiones. El programa GALBA recomienda partir de un ensamblaje con máscara suave, donde las regiones repetitivas están marcadas con letra minúscula. Para convertir la máscara dura en una máscara suave, utilizaremos bedtools.</p>
+<section id="ejercicio-3" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-3">Ejercicio 3</h3>
+<ol type="1">
+<li><p><em>Instala el programa bedtools siguiendo las instrucciones oportunas para tu sistema en la página oficial.</em></p></li>
+<li><p><em>Utiliza el ensamblaje original como archivo FASTA de entrada y el archivo GFF que ha producido RepetaMasker como coordenadas de las regiones a enmascarar. Lee el manual de bedtools maskfasta en este enlace y genera el ensamblaje con máscara suave llamado At4.soft.fa.</em></p></li>
+</ol>
+<p>Esto compara el archivo de salida con el RepeatMasker. Dentro de la carpeta RMO1 genera una versión enmascarada de nuestro ensamblaje.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">[</span> <span class="ot">!</span> <span class="ot">-e</span> At4.soft.fa <span class="bu">]</span><span class="kw">;</span> <span class="cf">then</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="ex">bedtools</span> maskfasta <span class="at">-soft</span> <span class="at">-fi</span> ../2026-04-21/asm1/At4.fa <span class="at">-fo</span> At4.soft.fa <span class="at">-bed</span> RepeatMaskerResults/RM01/At4.fa.out.gff</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="cf">fi</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="galba" class="level2">
+<h2 class="anchored" data-anchor-id="galba">GALBA</h2>
+<p>Al ver los resultados prot_seq_all.fa es el mismo archivo al que anteriormente le habíamos cambiado el nombre; son las proteínas que le hemos dado evidencia para que luego se compare con nuestros datos. galba.gff es el más importante - nos da la anotación del ensamblaje que hicimos del cromosoma 4 de A. thaliana. Vemos que los codones coinciden con las regiones codificantes, no hay UTRs - esto último se debee a que los datos que le hemos dado son proteínas, no tenemos datos de expresión del RNAseq. Al dar proteínas de entrada buscamos regiones que coinciden con las de las proteínas, no identificamos las regiones no-traducidas.</p>
+<section id="ejercicio-4" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-4">Ejercicio 4</h3>
+<p><em>Incluye en tu documento de Quarto un bloque de código (pero no ejecutable, con la opción eval: false) como el anterior, donde los caminos TSERBA y a MINIPROTHINT se correspondan con tu propia carpeta bin, aunque no los tengas instalados.</em></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">TSEBRA_PATH</span><span class="op">=</span>/home/alicia/bin/TSEBRA/bin/</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">MINIPROTHINT_PATH</span><span class="op">=</span>/home/alicia/bin/miniprothint/</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="ex">galba.pl</span> <span class="at">--species</span><span class="op">=</span><span class="st">"Arabidopsis thaliana"</span> <span class="dt">\</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">--genome</span><span class="op">=</span>At4.soft.fa <span class="dt">\</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">--prot_seq</span><span class="op">=</span>proteinas.fasta</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Encontrarás los resultados de GALBA en la carpeta comprimida galba.zip, en el aula virtual</p>
+</section>
+<section id="ejercicio-5" class="level3">
+<h3 class="anchored" data-anchor-id="ejercicio-5">Ejercicio 5</h3>
+<p><em>Échales un vistazo a los archivos de salida de GALBA y trata de sacar algo en claro.</em></p>
+<p>GALBA sirve para predecir estructuras de genes que codifican proteínas en genomas eucariotas. Teniendo esto en cuenta destaco los siguientes archivos:</p>
 <ul>
-<li><p>Los guiones se han subido en versión html (renderizados) para facilitar su visualización.</p></li>
-<li><p>Todas las prácticas (excepto un par de ejercicios) están acabadas y revisadas. Cabe destacar que el contenido de mi cuaderno ha sido completado <u>gracias a la ayuda de mis compañeras</u>. Ellas han colaborado con algunos ejercicios que me faltaban o me han ayudado a corregir algunos errores de mis guiones, mientras que yo he realizado lo mismo con sus repositorios. El objetivo de nuestra colaboración ha sido completar los contenidos de nuestros cuadernos.</p></li>
+<li><p>galba.aa: contiene secuencia de aminoácidos (estructura primaria).</p></li>
+<li><p>prot.codingseq: contiene secuencias codificantes proteicas.</p></li>
 </ul>
-<section id="qué-se-ha-trabajado-durante-las-prácticas" class="level2">
-<h2 class="anchored" data-anchor-id="qué-se-ha-trabajado-durante-las-prácticas">¿Qué se ha trabajado durante las prácticas?</h2>
-<p>Los contenidos que se han trabajado durante las prácticas son los mismos que los explicados en clase, sin embargo, estos han sido llevados a la práctica (valga la redundancia) en clase de informática. De esta forma, las sesiones prácticas desarrolladas durante el curso han servido para consolidar los conocimientos adquiridos en las clases teóricas de la asignatura.</p>
+<p>Además, mediante el archivo optimize.augustus.stdout confirmo que ha utilizado AUGUSTUS, el cual es un programa que predice genes en secuencias de genomas eucariotas.</p>
+<p>También hay una carpeta que pone “species”, la cual incluye información sobre la especie en la que se ha realizado el análisis, en este caso es <em>Arabidopsis Thaliana</em>.</p>
+<p><strong><em>Más información (comentado en clase):</em></strong> Tenemos un genoma ensamblado del que conocemos las 6000 proteínas. Comparíamos lo que hemos dado con lo que hemos ofrecido. Una forma rápida sería contar cuántos genes ha identificado. Vemos que de 6000 proteínas ha encontrado 4362, por lo que le faltan bastantes genes. Si fuera un ejercicio real utilizaríamos BUSCO.</p>
 </section>
-<section id="en-qué-entorno-se-ha-trabajado-durante-las-prácticas" class="level2">
-<h2 class="anchored" data-anchor-id="en-qué-entorno-se-ha-trabajado-durante-las-prácticas">¿En qué entorno se ha trabajado durante las prácticas?</h2>
-<p>Durante el desarrollo de estas prácticas he utilizado las siguientes <strong>herramientas</strong>:</p>
-<ul>
-<li><p><strong>Bash</strong></p></li>
-<li><p><strong>RStudio</strong></p></li>
-<li><p><strong>GitHub</strong></p></li>
-</ul>
-</section>
-<section id="qué-he-aprendido" class="level2">
-<h2 class="anchored" data-anchor-id="qué-he-aprendido">¿Qué he aprendido?</h2>
-<p>Además de los contenidos teóricos, he aprendido a llevarlos a la práctica utilizando las herramientas previamente mencionadas. Me gustaría destacar que a lo largo del curso he adquirido mayor soltura con ellas. Incluso he aprendido a desarrollar una página web utilizando R studio.</p>
-
-
 </section>
 </section>
 
-</main> <!-- /main -->
+</main>
+<!-- /main column -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
