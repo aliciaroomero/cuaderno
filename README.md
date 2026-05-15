@@ -15,5 +15,5 @@ H) Práctica 8. BLAST\
 I) Práctica 9. Reconstrucción filogenética\
 J) Práctica 10. Ensamblaje de genomas\
 K) Práctica 11. Anotación\
-L) Práctica 12. Análisis de expresión diferencial\
+L) Práctica 12. Análisis de expresión diferencial
 3. docs: Contiene toda la información necesaria para la página web.
