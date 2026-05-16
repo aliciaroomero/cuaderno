@@ -15,5 +15,6 @@ H) Práctica 8. BLAST\
 I) Práctica 9. Reconstrucción filogenética\
 J) Práctica 10. Ensamblaje de genomas\
 K) Práctica 11. Anotación\
-L) Práctica 12. Análisis de expresión diferencial
+L) Práctica 12. Análisis de expresión diferencial\
+*NOTA:* Al principio había añadido toda la información acerca de la página web en este repositorio pero la he cambiado (de última hora) a un nuevo repositorio llamado "Website".
 
